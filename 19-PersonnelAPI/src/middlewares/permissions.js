@@ -5,9 +5,11 @@
 // Middleware: permissions (authorization) -- yetki kontrolü
 
 module.exports = {
+    // 3 tane kontrol permisson middleware i yazdık
     // departman isimlerini herkez görebilir, kaç departman vb var gibi
     isLogin: (req, res, next) => {
         if(req.user && req.user.isActive){ //kullanıcı hesabıvarsa ve tipi aktif se, banlanmamışsa
+            //req.user authentication.js dosyasından geliyor, global erişimi var o yüzen require edilmedi
             next()
         } else {
             res.errorStatusCode = 403
@@ -25,7 +27,7 @@ module.exports = {
         }
     },
     // lead ler sadece kendi departmanlarını görebilir
-    isLead: (req, res, next) => {
+    isAdminOrLead: (req, res, next) => {
 
         const departmentId = req.params?.id // url den mutlaka bir departmentId gelmeli onu yakaladık burda
 
