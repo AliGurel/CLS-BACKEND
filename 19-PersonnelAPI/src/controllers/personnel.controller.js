@@ -53,6 +53,13 @@ module.exports = {
 
     update: async (req, res) => {
 
+        //personelin kendi bilgilerinden bazılarını değiştirmeye engel olmak
+        // kendini admin yapamıcak, maaşını değiştiremicek gibi
+        if (!req.user.isAdmin) {
+            req.user.isAdmin = false
+            delete req.body.salary //req body den gelen salary i sildi, admin olmayan personel maaşını değiştiremesin diye
+        }
+
         // isLead Control:
         const isLead = req.body?.isLead || false
         if (isLead) {
@@ -69,12 +76,7 @@ module.exports = {
         //personel modelin içinden id si req ten gelen id ye eşit olan personeli bul, bu personelin departman id sini yani departmanını bul, 
         //bu departmandaki isLead ı true olanları çek ve false a çevir  
 
-        //personelin kendi bilgilerinden bazılarını değiştirmeye engel olmak
-        // kendini admin yapamıcak, maaşını değiştiremicek gibi
-        if(!req.user.isAdmin){
-            req.user.isAdmin = false
-            delete req.body.salary //req body den gelen salary i sildi, admin olmayan personel maaşını değiştiremesin diye
-        }
+
 
         const data = await Personnel.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
