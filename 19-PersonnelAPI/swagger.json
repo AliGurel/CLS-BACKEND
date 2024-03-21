@@ -30,19 +30,26 @@
   "paths": {
     "/auth/login": {
       "post": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login",
+        "description": "Login with username and password",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "username": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "testF0"
                 },
                 "password": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "1234"
                 }
               }
             }
@@ -55,89 +62,16 @@
         }
       }
     },
-    "/tokens/": {
+    "/auth/logout": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout",
+        "description": "Delete Token",
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "description": "",
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        }
-      }
-    },
-    "/tokens/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted"
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      },
-      "patch": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted"
           }
         }
       }
@@ -269,7 +203,11 @@
     },
     "/departments/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Departments"
+        ],
+        "summary": "List Departments",
+        "description": "\r  You can send query with endpoint for search[], sort[], page and limit.\r  <ul> Examples:\r   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>\r   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>\r   <li>URL/?<b>page=2&limit=1</b></li>\r  </ul>\r  ",
         "responses": {
           "200": {
             "description": "OK"
@@ -277,7 +215,27 @@
         }
       },
       "post": {
+        "tags": [
+          "Departments"
+        ],
+        "summary": "Create Department",
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Test Department"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -287,6 +245,10 @@
     },
     "/departments/{id}": {
       "get": {
+        "tags": [
+          "Departments"
+        ],
+        "summary": "Get Single Department",
         "description": "",
         "parameters": [
           {
@@ -303,6 +265,10 @@
         }
       },
       "put": {
+        "tags": [
+          "Departments"
+        ],
+        "summary": "Update Department",
         "description": "",
         "parameters": [
           {
@@ -310,6 +276,20 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Test Department"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -319,6 +299,10 @@
         }
       },
       "delete": {
+        "tags": [
+          "Departments"
+        ],
+        "summary": "Delete Department",
         "description": "",
         "parameters": [
           {
@@ -338,6 +322,10 @@
         }
       },
       "patch": {
+        "tags": [
+          "Departments"
+        ],
+        "summary": "Update Department",
         "description": "",
         "parameters": [
           {
@@ -345,6 +333,20 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Test Department"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -356,6 +358,10 @@
     },
     "/departments/{id}/personnels": {
       "get": {
+        "tags": [
+          "Departments"
+        ],
+        "summary": "Personnels of Department",
         "description": "",
         "parameters": [
           {
@@ -666,7 +672,7 @@
             },
             "default": {
               "type": "number",
-              "example": 1711053348048
+              "example": 1711056054910
             }
           }
         }

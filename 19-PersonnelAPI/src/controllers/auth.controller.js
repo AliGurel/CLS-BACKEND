@@ -12,6 +12,20 @@ module.exports = {
     // LOGIN & LOGOUT
 
     login: async (req, res) => {
+        /*
+            #swagger.tags = ['Authentication']
+            #swagger.summary = 'Login'
+            #swagger.description = 'Login with username and password'
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: 'true',
+                schema: {
+                    username: "testF0",
+                    password: "1234"
+                }
+            }
+        */
+
 
         const { username, password } = req.body
 
@@ -34,18 +48,18 @@ module.exports = {
                 /*SESSION*/
 
                 /*TOKEN*/
-                let tokenData = await Token.findOne({userId: user._id}) //token zaten var mı kontrolü
+                let tokenData = await Token.findOne({ userId: user._id }) //token zaten var mı kontrolü
                 //userId token.model de, user._id => personnel modelde
 
-                if(!tokenData) { //eğer token daha önce oluşturulmamışsa oluştur
+                if (!tokenData) { //eğer token daha önce oluşturulmamışsa oluştur
                     const tokenKey = passwordEncrypt(user._id + Date.now()) //yeni token oluşturduk ve o anki zamanın sayısal değerini ıd ye ekleyerek üzerinde bir de şifreleyrek token çakışma ihtimalini imkansıza yaklaştırdık
-                    tokenData = await Token.create( {userId: user._id, token:tokenKey })
+                    tokenData = await Token.create({ userId: user._id, token: tokenKey })
                 }
 
                 /*TOKEN*/
                 res.status(200).send({
                     error: false,
-                    token:tokenData.token, //token i FE ye gönderdik
+                    token: tokenData.token, //token i FE ye gönderdik
                     user
                 })
 
@@ -60,6 +74,14 @@ module.exports = {
     },
 
     logout: async (req, res) => {
+
+        /*
+            #swagger.tags = ['Authentication']
+            #swagger.summary = 'Logout'
+            #swagger.description = 'Delete Token'
+        */
+
+
         /*SESSION*
         // Set session to null:
         req.session = null
@@ -80,7 +102,7 @@ module.exports = {
         //bize sadece tokenKey lazım olduğu için split ettik ve array elde ettik
 
         let deleted = null;
-        if (tokenKey && tokenKey[0]=='Token') {
+        if (tokenKey && tokenKey[0] == 'Token') {
             const deleted = await Token.deleteOne({ token: tokenKey[1] })
         }
 
