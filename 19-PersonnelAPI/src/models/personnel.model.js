@@ -25,7 +25,7 @@ const PersonnelSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      set: (password) => passwordEncrypt(password),
+      set: (password) => passwordEncrypt(password),//set metodu filtreleme ve read yaparken de çalışır,auth controllerde o nedenle tekrar şifreleme yapmadık
     },
 
     firstName: {
@@ -91,7 +91,10 @@ const PersonnelSchema = new mongoose.Schema(
       default: Date.now(),
     },
   },
-  { collection: "personnels", timestamps: true }
+  {
+    collection: "personnels",
+    timestamps: true
+  }
 );
 
 /* ------------------------------------------------------- */

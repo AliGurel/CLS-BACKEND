@@ -37,7 +37,7 @@ module.exports = {
 
   update: async (req, res) => {
     const data = await Department.updateOne({ _id: req.params.id }, req.body, {
-      runValidators: true,
+      runValidators: true,//eklemesek de olur ama bu modelde yapılan validasyonları uygular yanlış eksik giriş olmasın diye
     });
 
     res.status(202).send({
@@ -50,7 +50,7 @@ module.exports = {
   delete: async (req, res) => {
     const data = await Department.deleteOne({ _id: req.params.id });
 
-    res.status(data.deletedCount ? 204 : 404).send({
+    res.status(data.deletedCount ? 204 : 404).send({ // deletedCount datanın içindeki bi özellik
       error: !data.deletedCount,
       data,
     });
@@ -67,9 +67,9 @@ module.exports = {
     const Personnel = require("../models/personnel.model");
 
     const data = await res.getModelList(
-      Personnel,
-      { departmentId: req.params.id },
-      "departmentId"
+      Personnel, // model
+      { departmentId: req.params.id }, //filtreleme
+      "departmentId" // populate 
     );
 
     res.status(200).send({
@@ -77,7 +77,7 @@ module.exports = {
       detail: await res.getModelListDetails(
         Personnel,
         { departmentId: req.params.id },
-        "departmentId"
+        //"departmentId"
       ),
       data,
     });

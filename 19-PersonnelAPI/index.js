@@ -12,7 +12,7 @@ const express = require('express')
 const app = express()
 
 /* ------------------------------------------------------- */
-// Required Modules:
+// REQUIRED MODULER:
 
 // envVariables to process.env:
 require('dotenv').config()
@@ -22,14 +22,14 @@ const PORT = process.env?.PORT || 8000
 require('express-async-errors')
 
 /* ------------------------------------------------------- */
-// Configrations:
+// CONGIGURATIONS:
 
 // Connect to DB:
 const { dbConnection } = require('./src/configs/dbConnection')
 dbConnection()
 
 /* ------------------------------------------------------- */
-// Middlewares:
+// MIDDLEWARES:
 
 // Accept JSON:
 app.use(express.json())
@@ -40,7 +40,8 @@ app.use(require('cookie-session')({ secret: process.env.SECRET_KEY }))
 // res.getModelList():
 app.use(require('./src/middlewares/findSearchSortPage'))
 
-// Login/Logout Control Middleware
+/* ------------------------------------------------------- *
+// Login/Logout Control Middleware Sesion Cookie ile auth
 app.use(async (req, res, next) => {
 
     const Personnel = require('./src/models/personnel.model')
@@ -60,24 +61,29 @@ app.use(async (req, res, next) => {
 
     next()
 })
-
 /* ------------------------------------------------------- */
-// Routes:
+// Authentication Token
 
-// HomePath:
+app.use(require('./src/middlewares/authentication'))
+/* ------------------------------------------------------- */
+// ROUTES:
+
+// Ana route :
 app.all('/', (req, res) => {
     res.send({
         error: false,
         message: 'Welcome to PERSONNEL API',
-        session: req.session,
-        isLogin: req.isLogin
+        // session: req.session,
+        // isLogin: req.isLogin
+        user: req.user //token işleminden sonra personel datasını verir
     })
 })
 
 // /departments
-app.use('/departments', require('./src/routes/department.router'))
-// /personnels
-app.use('/personnels', require('./src/routes/personnel.router'))
+// app.use('/departments', require('./src/routes/department.router'))
+// // /personnels
+// app.use('/personnels', require('./src/routes/personnel.router'))
+app.use(require('./src/routes'))
 
 /* ------------------------------------------------------- */
 
