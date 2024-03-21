@@ -6,7 +6,7 @@ const router = require('express').Router()
 /* ------------------------------------------------------- */
 
 const token = require('../controllers/token.controller')
-// const permission = require('../middlewares/permissions')
+// const permission = require('../middlewares/permissions') // permissions daki tüm middlewarelere gerek yok onedenle sadece isAdmin i çağırdık aşağıda
 
 // URL: /tokens
 
@@ -19,11 +19,13 @@ const token = require('../controllers/token.controller')
 //     .put(permission.isAdmin, token.update)
 //     .patch(permission.isAdmin, token.update)
 //     .delete(permission.isAdmin, token.delete)
+// yukarıdaki uzun yöntem, her router a isAdmin kontrolü getirildi
+// aşağıdaki ise kısa yöntem
 
 // router.use(permission.isAdmin)    
 
-const {isAdmin} = require('../middlewares/permissions')
-router.use(isAdmin)
+const {isAdmin} = require('../middlewares/permissions') // permissions tan sadece isAdmin middleware ini çağırdık, diğerleri lazım değil çünkü
+router.use(isAdmin) // isAdmin i tüm router a uyguladık
 
 router.route('/')
     .get(token.list)

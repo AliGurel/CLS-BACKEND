@@ -9,7 +9,7 @@ module.exports = {
     // departman isimlerini herkez görebilir, kaç departman vb var gibi
     isLogin: (req, res, next) => {
         if(req.user && req.user.isActive){ //kullanıcı hesabıvarsa ve tipi aktif se, banlanmamışsa
-            //req.user authentication.js dosyasından geliyor, global erişimi var o yüzen require edilmedi
+            //req.user authentication.js middlewareindan dosyasından geliyor, global erişimi var o yüzen require edilmedi
             next()
         } else {
             res.errorStatusCode = 403
