@@ -28,11 +28,44 @@ require('express-async-errors')
 const { dbConnection } = require('./src/configs/dbConnection')
 dbConnection()
 
+/* ------------------------------------------------------- *
+// //? MORGAN LOGGING
+// //https://expressjs.com/en/resources/middleware/morgan.html
+// // https://github.com/expressjs/morgan
+// //? $ npm i morgan
+
+// const morgan = require('morgan') //morgan bir middleware dir app.use ile çağrılır
+// app.use(morgan('combined')) // hazır log formatları
+// app.use(morgan('common'))
+// app.use(morgan('dev'))
+// app.use(morgan('short'))
+// app.use(morgan('tiny'))
+// app.use(morgan('IP=:remote-addr | TIME=:date[clf] | METHOD=:method | URL=:url | STATUS=:status | LENGTH=:res[content-length] | REF=:referrer |  AGENT=:user-agent')) //kendi log yönetmimizi de bu şekilde tanımlayabiliriz
+
+//? LOG dosyasına yazdırma
+//morgan sadece log kaydı tutar dosyaya yazdırmaz, bunun için aşağıdakini kullanıcaz
+// const fs = require('node:fs')
+
+// app.use(morgan('combined',{
+//     stream: fs.createWriteStream('./access.log', {flags : 'a+'} ) //a+ okuma ve ekleme yetkisiyle dosyayı aç, eğer böyle bir dosya yoksa oluştur demek
+// }))
+
+// log kayıtlarını günlük tutmak için;
+const fs = require('node:fs')
+const now = new Date()
+const today = now.toISOString().split('T')[0]
+app.use(morgan('combined', {
+    stream: fs.createWriteStream(`./logs/${today}.log`, { flags: 'a+' })
+}))
+
 /* ------------------------------------------------------- */
 // MIDDLEWARES:
 
 // Accept JSON:
 app.use(express.json())
+
+//LOGGING
+app.use(require('./src/middlewares/logging'))
 
 // SessionsCookies:
 app.use(require('cookie-session')({ secret: process.env.SECRET_KEY }))
