@@ -59,6 +59,18 @@ app.use(morgan('combined', {
 }))
 
 /* ------------------------------------------------------- */
+//* DOCUMENTATION
+// $ npm i swagger-autogen //routerları controllearı tarıcak bir json dosyası ortaya çıkarıcak
+// $ npm i swagger-ui-express // jsonları görüntüleyecek
+// $ npm i redoc-express
+
+//?SWAGGER:
+const swaggerUi = require('swagger-ui-express')
+const swaggerJson = require('./swagger.json')
+app.use('/documents/swagger', swaggerUi.serve, swaggerUi.setup(swaggerJson, { swaggerOptions: { persistAuthorization: true } }))
+
+
+/* ------------------------------------------------------- */
 // MIDDLEWARES:
 
 // Accept JSON:
