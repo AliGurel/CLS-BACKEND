@@ -6,20 +6,21 @@ const router = require('express').Router()
 /* ------------------------------------------------------- */
 
 const department = require('../controllers/department.controller')
+const permission = require('../middlewares/permissions')
 
 // URL: /departments // gelen isteğin ilk parçası, index.js ten gelen
 
 router.route('/')
-    .get(department.list)
-    .post(department.create)
+    .get(permission.isLogin, department.list)//isLogin kontrolünü yap, eğer login olmuşsa list çalışsın
+    .post(permission.isAdmin, department.create)
 
 router.route('/:id')
-    .get(department.read)
-    .put(department.update)
-    .patch(department.update)
-    .delete(department.delete)
+    .get(permission.isLogin, department.read)
+    .put(permission.isAdmin, department.update)
+    .patch(permission.isAdmin, department.update)
+    .delete(permission.isAdmin, department.delete)
 
-router.get('/:id/personnels', department.personnels)
+router.get('/:id/personnels',permission.isAdminOrLead, department.personnels)
 
 /* ------------------------------------------------------- */
 module.exports = router
