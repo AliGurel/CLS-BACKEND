@@ -20,7 +20,8 @@ module.exports = async (req,res,next)=>{
     if (tokenKey && tokenKey[0] == 'Token'){//tokenKey var mı ve ilk indeksi Token mi
 
         const tokenData = await Token.findOne({token: tokenKey[1]}).populate('userId')//personnel modelini çağırmaya gerek kalmadan ilgili personel verisini populate ile elde ettik
-        if(tokenData) req.user = tokenData.userId // personnel datasını req.user isimli değişkene  ata
+        if(tokenData) req.user = tokenData.userId // personnel datasını req.user isimli değişkene atadık
+        // req.user olarak tanımlamamızın sebebi onu global bir değişken haline getirmek ve her yerde çağırıp kullanilabilir kılmak
         console.log(req.user);
     }
 

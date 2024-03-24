@@ -8,12 +8,12 @@ const router = require('express').Router()
 const personnel = require('../controllers/personnel.controller')
 const permission = require('../middlewares/permissions')
 
-
 // URL: /personnels
 
 router.route('/')
     .get(permission.isAdmin, personnel.list)
     .post(permission.isAdmin, personnel.create)
+    //.post(personnel.create)
 
 router.route('/:id')
     .get(permission.isAdminOrOwn, personnel.read)
