@@ -17,6 +17,9 @@ const today = now.toISOString().split('T')[0]
 //     stream: fs.createWriteStream(`./logs/${today}.log`, { flags: 'a+' })
 // }))
 
+
+// Aşağıdaki komutla birlikte, proje ana dizininde logs isimli klasör altında her gün için bir log dosyası açılacak
+// flags : 'a+' bu dosyanın hem oluşturulması hem de yazılması izinleri için verildi
 module.exports = morgan('combined', {
     stream: fs.createWriteStream(`./logs/${today}.log`, { flags: 'a+' })
 })

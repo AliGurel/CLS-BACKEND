@@ -12,7 +12,7 @@ const express = require('express')
 const app = express()
 
 /* ------------------------------------------------------- */
-// REQUIRED MODULER:
+// REQUIRED MODULS:
 
 // envVariables to process.env:
 require('dotenv').config()
@@ -22,7 +22,7 @@ const PORT = process.env?.PORT || 8000
 require('express-async-errors')
 
 /* ------------------------------------------------------- */
-// CONGIGURATIONS:
+// CONFIGURATIONS:
 
 // Connect to DB:
 const { dbConnection } = require('./src/configs/dbConnection')
@@ -60,7 +60,7 @@ app.use(morgan('combined', {
 
 /* ------------------------------------------------------- */
 //* DOCUMENTATION
-// $ npm i swagger-autogen //routerları controllearı tarıcak bir json dosyası ortaya çıkarıcak
+// $ npm i swagger-autogen //routerları controllerları tarıcak bir json dosyası ortaya çıkarıcak
 // $ npm i swagger-ui-express // jsonları görüntüleyecek
 // $ npm i redoc-express
 
