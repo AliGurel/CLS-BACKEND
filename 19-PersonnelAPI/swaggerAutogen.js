@@ -2,6 +2,8 @@
 /* -------------------------------------------------------
     EXPRESS - Personnel API
 ------------------------------------------------------- */
+// Ender kullanılacak dosya bu dosya, sync dosyası gibi
+
 require('dotenv').config()
 const HOST = process.env?.HOST || '127.0.0.1'
 const PORT = process.env?.PORT || 8000
@@ -33,6 +35,8 @@ const document = { //sonuçta oluşrurulacak json dosyasının ön tanımlamalar
 	// 	contact: { name: "Clarusway", email: "qadir@clarusway.com" },
 	// 	license: { name: "BSD License", },
 	// },
+
+	// yukarıdaki bilglerin nedeyse tamamı zaten bizim package.json dosyamızda var o bedenle package.json dan çekeceğiz bu bilgileri, o ndenle yukarıda package.json u require ettik önce 
 	info: {
 		version: packageJson.version,
 		title: packageJson.title,
@@ -54,6 +58,10 @@ const document = { //sonuçta oluşrurulacak json dosyasının ön tanımlamalar
 		},
 	},
 	security: [{ Token: [] }], //giriş yöntemi bu olsun
+
+	// dokümantasyondaki MODELLER kısmı ile ilgili alanlardan sorumlu aşağıdakiler
+	// authentication.model diye bir model olmadığı için login ve refresh i manuel yazdı
+	// hazır tanımlı olan modelleri direkt çağırabiliyoruz
 	definitions: {
 		"/auth/login": {
 			username: {
@@ -83,8 +91,13 @@ const document = { //sonuçta oluşrurulacak json dosyasının ön tanımlamalar
 	}
 };
 
-const routes = ['./index.js'] //rout taramasına index.js den başla
+const routes = ['./index.js'] //sistem taramasına index.js den başla
 const outputFile = './swagger.json' //sonuç olarak yazacağın json dosyası anadizindeki swagger.json dosyasıdır
 
 // Create JSON file:
-swaggerAutogen(outputFile, routes, document)
+swaggerAutogen(outputFile, routes, document) //outputFile a, şu sırayla, document teki kurallara göre bilgileri yaz demek
+
+
+// swaggerAutogen ı başlatmak için yeni terminal açtırdı, orda terminale node swaggerAutogen.js yazdırıp çalıştırdı
+// bunu çalıştırınca ana dizinde 91 satırda belirtilen swagger.json isimli bir dosya oluşturuldu
+// swagger a kaynağı artık oluşturduk artık sıra geldi görüntüleme kısmına

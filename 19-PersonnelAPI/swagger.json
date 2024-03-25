@@ -78,7 +78,11 @@
     },
     "/personnels/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Personnels"
+        ],
+        "summary": "List Personnels",
+        "description": "\r  You can send query with endpoint for search[], sort[], page and limit.\r  <ul> Examples:\r   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>\r   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>\r   <li>URL/?<b>page=2&limit=1</b></li>\r  </ul>\r  ",
         "responses": {
           "200": {
             "description": "OK"
@@ -86,16 +90,50 @@
         }
       },
       "post": {
+        "tags": [
+          "Personnels"
+        ],
+        "summary": "Create Personnels",
         "description": "",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "departmentId": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "id"
+                },
+                "username": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "12345"
+                },
+                "firstName": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "deneme"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "055555555"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "deneme@test.com"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "CEO"
                 }
               }
             }
@@ -110,6 +148,10 @@
     },
     "/personnels/{id}": {
       "get": {
+        "tags": [
+          "Personnels"
+        ],
+        "summary": "Get Single Personnel",
         "description": "",
         "parameters": [
           {
@@ -126,6 +168,10 @@
         }
       },
       "put": {
+        "tags": [
+          "Personnels"
+        ],
+        "summary": "Update Personnel",
         "description": "",
         "parameters": [
           {
@@ -137,11 +183,41 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "salary": {
-                  "example": "any"
+                "departmentId": {
+                  "type": "string",
+                  "example": "id"
+                },
+                "username": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "12345"
+                },
+                "firstName": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "deneme"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "055555555"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "deneme@test.com"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "CEO"
                 }
               }
             }
@@ -154,6 +230,10 @@
         }
       },
       "delete": {
+        "tags": [
+          "Personnels"
+        ],
+        "summary": "Delete Personnel",
         "description": "",
         "parameters": [
           {
@@ -173,6 +253,10 @@
         }
       },
       "patch": {
+        "tags": [
+          "Personnels"
+        ],
+        "summary": "Update Personnel",
         "description": "",
         "parameters": [
           {
@@ -184,11 +268,41 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "salary": {
-                  "example": "any"
+                "departmentId": {
+                  "type": "string",
+                  "example": "id"
+                },
+                "username": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "12345"
+                },
+                "firstName": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "deneme"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "055555555"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "deneme@test.com"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "CEO"
                 }
               }
             }
@@ -672,7 +786,7 @@
             },
             "default": {
               "type": "number",
-              "example": 1711056054910
+              "example": 1711329991828
             }
           }
         }

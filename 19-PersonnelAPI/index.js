@@ -65,21 +65,36 @@ app.use(morgan('combined', {
 // $ npm i redoc-express
 
 //? JSON
+// URL ye /documents/json yazıldığında ekrana swagger.json dosya içeriğini göster
+// bu dosya bize redoc ta çalıştırmak için gerekli olacak
 app.use('/documents/json', (req, res) => {
-    res.sendFile('swagger.json', { root: '.' })
+    res.sendFile('swagger.json', { root: '.' }) // root, swagger.json dosyasını nerede arayayım kısmının belirtildiği yer, '.' olması içinde bulunulan klasörde (burada ana dizinde) ara demek 
 })
 
 //? SWAGGER:
+//swagger için oluşturulan kaynak swagger.json dosyasını görüntüleyecek olan modül
 const swaggerUi = require('swagger-ui-express')
 const swaggerJson = require('./swagger.json')
+//url ye '/documents/swagger' yazıldığında bu swagger çalışsın ve görüntüleme yapsn
+//1.parametre: swagger hangi url de çalışsın
+//2. parametre: swagger 1.parametredeki url girilince çalışmaya başlasın
+//3. parametre: 
+    // a. parametre: görüntüleme çalışması içn gereken swagger.json nerede onu getir
+    // b. parametre: Token çalıştırma ayarı
+//çlışacak url: http://127.0.0.1:8000/documents/swagger
 app.use('/documents/swagger', swaggerUi.serve, swaggerUi.setup(swaggerJson, { swaggerOptions: { persistAuthorization: true } }))
 
 //? REDOC:
 const redoc = require('redoc-express')
+//1.parametre: redoc, /documents/redoc url sinde çalışsın
+//2. parametre: redoc ayarlarıdır;
+    //a. dokümantasyon başlığı ne olsun
+    //b. gereki olan json dosyasını nerden alacak, bunu yukarıda JSON bölümündeki /documents/json yerden alıyor, o olmazsa çalışmaz dedi
 app.use('/documents/redoc', redoc({
     title: 'PersonnelAPI',
     specUrl: '/documents/json'
 }))
+//çlışacak url: http://127.0.0.1:8000/documents/redoc
 
 /* ------------------------------------------------------- */
 // MIDDLEWARES:
@@ -132,9 +147,9 @@ app.all('/', (req, res) => {
 
         api: {
             documents: {
-                swagger: 'http://127.0.0.1:8000/docs/swagger',
-                redoc: 'http://127.0.0.1:8000/docs/redoc',
-                json: 'http://127.0.0.1:8000/docs/json',
+                swagger: 'http://127.0.0.1:8000/documents/swagger',
+                redoc: 'http://127.0.0.1:8000/documents/redoc',
+                json: 'http://127.0.0.1:8000/documents/json',
             },
             contact: 'contact@clarusway.com'
         },
@@ -152,7 +167,7 @@ app.use(require('./src/routes'))
 
 /* ------------------------------------------------------- */
 
-// errorHandler:
+// errorHandler: 
 app.use(require('./src/middlewares/errorHandler'))
 
 // RUN SERVER:

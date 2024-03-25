@@ -8,7 +8,9 @@ const Token = require("../models/token.model");
 module.exports = {
 
     list: async (req, res) => {
-
+        // bu bölüm dokümantosyanda gözükmesin diye aşağıdaki gibi yazılır, 
+        // _ tire konursa swagger hiç göstermez
+        // ignore denirse pasif moddda gösterir
         /*
             _swagger.deprecated = true
             #swagger.ignore = true
