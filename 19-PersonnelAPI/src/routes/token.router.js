@@ -19,6 +19,7 @@ const token = require('../controllers/token.controller')
 //     .put(permission.isAdmin, token.update)
 //     .patch(permission.isAdmin, token.update)
 //     .delete(permission.isAdmin, token.delete)
+
 // yukarıdaki uzun yöntem, her router a isAdmin kontrolü getirildi
 // aşağıdaki ise kısa yöntem
 

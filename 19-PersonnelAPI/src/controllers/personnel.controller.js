@@ -54,9 +54,11 @@ module.exports = {
     update: async (req, res) => {
 
         //personelin kendi bilgilerinden bazılarını değiştirmeye engel olmak
-        // kendini admin yapamıcak, maaşını değiştiremicek gibi
+        // kendini admin/lead yapamıcak, maaşını değiştiremicek gibi
         if (!req.user.isAdmin) {
             req.user.isAdmin = false
+            //req.user.isLead = false
+            delete req.body.isLead // yukardaki gibi de olur bu da olur 
             delete req.body.salary //req body den gelen salary i sildi, admin olmayan personel maaşını değiştiremesin diye
         }
 

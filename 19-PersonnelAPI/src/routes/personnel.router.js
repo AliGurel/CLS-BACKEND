@@ -9,7 +9,7 @@ const personnel = require('../controllers/personnel.controller')
 const permission = require('../middlewares/permissions')
 
 // URL: /personnels
-
+// permission işlemleri router larda yapılıyor
 router.route('/')
     .get(permission.isAdmin, personnel.list)
     .post(permission.isAdmin, personnel.create)
