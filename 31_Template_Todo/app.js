@@ -25,20 +25,27 @@ require('express-async-errors')
 // Setting template engine, template motoru olarak ejs kullan demek
 app.set('view engine', 'ejs')
 
+// default view folder: views/
+//normalde default olrak views klasörü kullanılıyor, bunun yerine biz mesela public klasörünü
+//kullanmak istersek aşağıdaki kodu yazabiliriz
+app.set('views', './public')
+
 app.all('/', (req, res) => {
     // API:
     // res.send({
     //     message: 'Hello'
     // })
+    //önceden browser a görüntüyü json olarak veriyoduk şimdi html ile vereceğiz
     // View Template: Template de ekrana göndermek için rew.render kullanılır
     res.render('index')
 })
-    // Routes:
+// Routes:
 
-    app.use(require('./app/routes/todo.router'))
+app.use('/api', require('./app/routes/todo.api.router'))
+app.use('/view', require('./app/routes/todo.view.router'))
 
-    /* ------------------------------------------------------- */
-    // ErrorHandler:
-    app.use(require('./app/errorHandler'))
-    /* ------------------------------------------------------- */
-    app.listen(PORT, () => console.log("Running: http://127.0.0.1:" + PORT));
+/* ------------------------------------------------------- */
+// ErrorHandler:
+app.use(require('./app/errorHandler'))
+/* ------------------------------------------------------- */
+app.listen(PORT, () => console.log("Running: http://127.0.0.1:" + PORT));

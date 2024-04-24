@@ -4,20 +4,9 @@
 ------------------------------------------------------- */
 // ROUTERS:
 
-const todo = require('../controllers/todo.controller')
+const todo = require('../controllers/todo.view.controller')
 
 const router = require('express').Router()
-
-// // List:
-// router.get('/', todo.list)
-// // Create:
-// router.post('/', todo.create)
-// // Read:
-// router.get('/:id', todo.read)
-// // Update:
-// router.put('/:id', todo.update)
-// // Delete:
-// router.delete('/:id', todo.delete)
 
 router.route('/')
     .get(todo.list)
