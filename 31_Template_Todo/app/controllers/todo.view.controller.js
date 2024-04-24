@@ -33,22 +33,30 @@ module.exports = {
 
     create: async (req, res) => {
 
-        // const receivedData = req.body
+        // const data = await Todo.create(req.body)
 
-        // const data = await Todo.create({
-        //     title: receivedData.title,
-        //     description: receivedData.description,
-        //     priority: receivedData.priority,
-        //     isDone: receivedData.isDone,
-        //     // newKey: 'newValue' // Modelde tanımlanmadığı için bir işe yaramayacaktır.
+        // res.status(201).send({
+        //     error: false,
+        //     result: data.dataValues
         // })
-
-        const data = await Todo.create(req.body)
-
-        res.status(201).send({
-            error: false,
-            result: data.dataValues
-        })
+        if (req.method == 'POST') {
+            //method post ise datayı ekle
+            //CREATE yap
+            const data = await Todo.create(req.body)
+            //errorhandler çalıştığı için hata yönetimine gerek yok
+            // if (data) {
+            //     //create başarılıysa ana sayfaya geri dön
+            //     res.redirect('/view')
+            // }else { //create yapılmamışsa içinde bulunduğum sayfaya geri gel
+            //     res.redirect('/view/create')
+            // }
+            res.redirect('/view')
+        }else {
+            // metod get ise sadece formu göster
+            //FORM Görüntüle
+            res.render('todoCreate', {priority: PRIORITY})
+        }
+        
     },
 
     read: async (req, res) => {
