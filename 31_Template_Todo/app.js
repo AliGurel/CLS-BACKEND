@@ -25,12 +25,20 @@ require('express-async-errors')
 // Setting template engine, template motoru olarak ejs kullan demek
 app.set('view engine', 'ejs')
 
-// Routes:
+app.all('/', (req, res) => {
+    // API:
+    // res.send({
+    //     message: 'Hello'
+    // })
+    // View Template: Template de ekrana göndermek için rew.render kullanılır
+    res.render('index')
+})
+    // Routes:
 
-app.use(require('./app/routes/todo.router'))
+    app.use(require('./app/routes/todo.router'))
 
-/* ------------------------------------------------------- */
-// ErrorHandler:
-app.use(require('./app/errorHandler'))
-/* ------------------------------------------------------- */
-app.listen(PORT, () => console.log("Running: http://127.0.0.1:" + PORT));
+    /* ------------------------------------------------------- */
+    // ErrorHandler:
+    app.use(require('./app/errorHandler'))
+    /* ------------------------------------------------------- */
+    app.listen(PORT, () => console.log("Running: http://127.0.0.1:" + PORT));

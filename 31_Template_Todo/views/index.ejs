@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Welcome to Home</h1>
+    <!-- pre yapınca trim yapmaz aşapıdaki boşlukları da basar ekrana -->
+    <pre>
+        <!-- running js -->
+        <!-- burdaki <%  %> komutu node js komutu var anlamına gelir -->
+        <% console.log('template run'); %>
+        <!-- ekrana - browser a güvenli modda dinamik olarak bişeyler yazdırmak -->
+        <%= '<p><b> Text </b></p>' %>
+        <!-- ekrana - browser a direkt dinamik olarak bişeyler yazdırmak -->
+        <%- '<p><b> Text </b></p>'  %>
+        <!-- yorum  -->
+        <%# yorumdur %>
+        <%#- sistem 'kucuk%' ifadesini yok saysın, özel kod olmaktan çıksın  %>
+        <%% no template %>
+        <!-- ekrana - browser a direkt dinamik olarak bişeyler yazdır ve alt satıra geçmeyi engelle -->
+        <%- '<p><b> Text </b></p>'  -%>
+    </pre>
+</body>
+
+</html>
