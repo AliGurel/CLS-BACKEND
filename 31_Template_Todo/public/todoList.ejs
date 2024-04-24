@@ -15,6 +15,7 @@
     <div class="container">
         <div class="row">
             <h1>TODO LIST</h1>
+            <p>Count: <%= count %></p>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -36,9 +37,9 @@
                             <td># <%= todo.id %></td>
                             <td><%= todo.title %></td>
                             <td><%= todo.description %></td>
-                            <td><%= todo.priority %></td>
-                            <td><%= todo.isDone %></td>
-                            <td><%= todo.createdAt %></td>
+                            <td><%= priority[todo.priority] %></td>
+                            <td><%= (todo.isDone ? 'YES' : 'NO') %></td>
+                            <td><%= todo.createdAt.toLocaleDateString('tr') %></td>
                             <td>
                                 <a class="btn btn-sm btn-secondary" href="/view/<%= todo.id %>">Read</a>
                                 <a class="btn btn-sm btn-info" href="/view/<%= todo.id %>/update">Update</a>

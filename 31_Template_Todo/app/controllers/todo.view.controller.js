@@ -6,6 +6,12 @@
 
 const Todo = require('../models/todo.model')
 
+const PRIORITY = {
+    '-1': 'Low',
+    '0': 'Norm',
+    '1': 'High'
+}
+
 module.exports = {
 
     list: async (req, res) => {
@@ -18,7 +24,9 @@ module.exports = {
         //     result: data
         // })
         //View
-        res.render('todoList.ejs', {todos: data.rows, count: data.count})
+        //2. parametredeki obje içinde todoList.ejs içine gönderilecek datalar var,
+        // buradaki key ler ile todoList içindeki değişken adlrı aynı olmak zorunda
+        res.render('todoList.ejs', {todos: data.rows, count: data.count, priority: PRIORITY})
     },
 
     // CRUD:
