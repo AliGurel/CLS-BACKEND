@@ -1,0 +1,21 @@
+# dockerfile dosyası oluşturulur, uzantısı yok, isimli farklı olamaz
+
+# İşletim sistemi lazım (Linux), node lazım, hello.js lazım
+
+# hem node yüklenecek hem de linux yüklenecek
+FROM node:21-alpine3.18 
+
+# çalıştığım dosyaları benim belirttiğim klasöre koy, serverda yani image de app isimli bir çalışma klasör oluştur, şuan localde /app isimli klasör bu nedenle olmıcak  
+# projeme ait dosyaları bu klasöre aktarıcaz
+WORKDIR /app
+
+# hangi dosyalar app e aktarılacak
+#COPY source dest
+#source: dockerfile isimli file in olduğu klasördür, yani şuan içinde bulunduğumuz klasör o nedenle de . koydu
+#source daki herşeyi almak istiyorsam . koy, veya tek bir file almak istiyorsam file adını yaz hello.js gibi
+#dest: destination, yani working directory nin olduğu klasör, yukarıda oluşturulan WORKDIR yani /app
+#COPY hello.js /app => bu uzun versiyon, aşağıdaki noktalı ksıa versiyon
+COPY . .
+
+#build işleminden sonra hello.js dosyasını çalıştır
+CMD node hello.js 
