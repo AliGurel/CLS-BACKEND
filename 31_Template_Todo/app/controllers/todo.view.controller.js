@@ -17,7 +17,11 @@ module.exports = {
     list: async (req, res) => {
 
         // const data = await Todo.findAll()
-        const data = await Todo.findAndCountAll()
+        const data = await Todo.findAndCountAll({
+            order: [
+                ['id', 'desc']
+            ]
+        })
 
         // res.status(200).send({
         //     error: false,
@@ -26,7 +30,7 @@ module.exports = {
         //View
         //2. parametredeki obje içinde todoList.ejs içine gönderilecek datalar var,
         // buradaki key ler ile todoList içindeki değişken adlrı aynı olmak zorunda
-        res.render('todoList.ejs', {todos: data.rows, count: data.count, priority: PRIORITY})
+        res.render('todoList.ejs', { todos: data.rows, count: data.count, priority: PRIORITY })
     },
 
     // CRUD:
@@ -51,12 +55,12 @@ module.exports = {
             //     res.redirect('/view/create')
             // }
             res.redirect('/view')
-        }else {
+        } else {
             // metod get ise sadece formu göster
             //FORM Görüntüle
-            res.render('todoCreate', {priority: PRIORITY})
+            res.render('todoCreate', { priority: PRIORITY })
         }
-        
+
     },
 
     read: async (req, res) => {
@@ -64,25 +68,39 @@ module.exports = {
         // const data = await Todo.findOne({ where: { id: req.params.id } })
         const data = await Todo.findByPk(req.params.id)
 
-        res.status(200).send({
-            error: false,
-            result: data
-        })
-
+        // res.status(200).send({
+        //     error: false,
+        //     result: data
+        // })
+        //clg(data) yapınca ihtiyacımız olan verilerin dataValues içinde olduğunu gördük o yüzden onu yazdık aşağıya
+        res.render('todoRead', { todo: data.dataValues, priority: PRIORITY })
     },
 
     update: async (req, res) => {
 
         // const data = await Todo.update({ ...newData }, { ...where })
-        const data = await Todo.update(req.body, { where: { id: req.params.id } })
+        // const data = await Todo.update(req.body, { where: { id: req.params.id } })
 
-        res.status(202).send({
-            error: false,
-            message: 'Updated',
-            body: req.body, // Gönderdiğim veriyi göster.
-            result: data,
-            new: await Todo.findByPk(req.params.id) // Güncellenmiş veriyi de göster.
-        })
+        // res.status(202).send({
+        //     error: false,
+        //     message: 'Updated',
+        //     body: req.body, // Gönderdiğim veriyi göster.
+        //     result: data,
+        //     new: await Todo.findByPk(req.params.id) // Güncellenmiş veriyi de göster.
+        // })
+
+
+        if (req.method == 'POST') {
+            //UPDATE
+            const data = await Todo.update(req.body, { where: { id: req.params.id } })
+            res.redirect('/view')
+        } else {
+            // metod get ise sadece formu göster
+            //FORM Görüntüle
+            //mevcut datayı getir güncellemeden önce
+            const data = await Todo.findByPk(req.params.id)
+            res.render('todoUpdate', { todo: data.dataValues, priority: PRIORITY })
+        }
     },
 
     delete: async (req, res) => {
@@ -101,7 +119,8 @@ module.exports = {
         if (data > 0) { // Silme gerçekleşti ise:
             // res.status(204).send()
             //? Sadece status çıktı ver:
-            res.sendStatus(204)
+            // res.sendStatus(204)
+            res.redirect('/view')
         } else { // Silme gerçekleşmedi ise:
             // res.status(404).send({
             //     error: true,

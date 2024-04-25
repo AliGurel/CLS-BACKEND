@@ -46,7 +46,9 @@ app.all('/', (req, res) => {
 })
 // Routes:
 
+///api ile backend kısmına yönlendirilecek
 app.use('/api', require('./app/routes/todo.api.router'))
+// /view ile frontend kısmına yönlendirilecek
 app.use('/view', require('./app/routes/todo.view.router'))
 
 /* ------------------------------------------------------- */
