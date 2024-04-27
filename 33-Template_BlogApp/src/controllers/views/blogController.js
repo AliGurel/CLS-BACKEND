@@ -96,11 +96,13 @@ module.exports.BlogPost = {
         const categories = await BlogCategory.find()
         // son yayınlana 3 bloğu aldık
         const recentPosts = await BlogPost.find().sort({ createdAt : 'desc'}).limit(3)
+        const pageUrl = req.originalUrl.replace(/[?|&]page=([^&]+)/gi, '')
         res.render('index', {
             categories, 
             posts: data, 
             recentPosts,
-            details: await res.getModelListDetails(BlogPost)
+            details: await res.getModelListDetails(BlogPost),
+            pageUrl: (pageUrl.includes('?') ? pageUrl : pageUrl+'?')
         })
     },
 
