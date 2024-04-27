@@ -70,7 +70,8 @@ app.all('/*', (req, res) => {
     // }else {
     //     res.send('<h1> WELCOME TO BLOG APP </h1>')
     // }
-    res.send('<h1> WELCOME TO BLOG APP </h1>')
+    res.redirect('/views/blog/post')
+    // res.send('<h1> WELCOME TO BLOG APP </h1>')
 })
 
 // Routes: // Bunlar VIEWS yanei Template dir
