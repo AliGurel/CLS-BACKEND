@@ -29,9 +29,9 @@ const PORT = process.env.PORT || 8000
 app.set('view engine', 'ejs')
 //Değiştirme yöntemi - 2 (kısa yol);
 app.set('view options', {
-    //delimiter: '%',
-    openDelimiter : '{',
-    closaDelimiter : '}'
+    // delimiter: '%',
+    openDelimiter: '{',
+    closeDelimiter: '}',
 })
 
 app.set('views', './public')
@@ -56,7 +56,7 @@ require('./src/dbConnection')
 app.use(require('./src/middlewares/findSearchSortPage'))
 
 // HomePage:
-app.all('/*', (req, res) => {
+app.all('/', (req, res) => {
     // yukarıdaki yıldız gelen herşeyi kabul et demek
     //direkt ana sayfa url si gelince /views a yönlendirsin demek
     // if (req.originalUrl == '/') {
@@ -82,6 +82,10 @@ app.use('/views/blog', require('./src/routes/views/blogRoute'))
 app.use('/api/user', require('./src/routes/api/userRoute'))
 app.use('/api/blog', require('./src/routes/api/blogRoute'))
 
+// StaticFiles
+//url den /assets diye bir istek gelirse bu bir static dosyadır ve onları assets dosyasında ara
+app.use('/assets', express.static('./public/assets'))
+
 /* ------------------------------------------------------- */
 // Synchronization:
 // require('./src/sync')()
@@ -90,3 +94,4 @@ app.use('/api/blog', require('./src/routes/api/blogRoute'))
 app.use(require('./src/errorHandler'))
 
 app.listen(PORT, () => console.log('Running: http://127.0.0.1:' + PORT))
+
