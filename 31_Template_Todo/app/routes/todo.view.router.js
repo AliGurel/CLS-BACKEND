@@ -25,7 +25,7 @@ const router = require('express').Router()
 router.all('/', todo.list)
 // router.get('/create', todo.create) // önce formu gösterir
 // router.post('/create', todo.create) // create butonuna basınca formu gönderir, işeme alır
-//yukarıdaki 2 satırın kısaltması, method un get mi post u olduğunu controller da kontorl ediyoruz
+//aşağıdaki yöntem, yukarıdaki 2 satırın kısaltması, method un get mi post u olduğunu controller da kontorl ediyoruz
 router.all('/create', todo.create)
 
 router.all('/:id', todo.read)

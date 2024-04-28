@@ -17,6 +17,7 @@ module.exports = {
     list: async (req, res) => {
 
         // const data = await Todo.findAll()
+        //console.log(data) => yapınca datalarımın data.rows içinde olduğunu görüyorum
         const data = await Todo.findAndCountAll({
             order: [
                 ['id', 'desc']
@@ -28,9 +29,11 @@ module.exports = {
         //     result: data
         // })
         //View
+        // 1.parametre, hangi dosyaya gönderillecek/çalıştırılacak
         //2. parametredeki obje içinde todoList.ejs içine gönderilecek datalar var,
         // buradaki key ler ile todoList içindeki değişken adlrı aynı olmak zorunda
         res.render('todoList.ejs', { todos: data.rows, count: data.count, priority: PRIORITY })
+        // data.rows ve data.count u clg(data) yaptığımızda gördük.
     },
 
     // CRUD:
@@ -44,7 +47,7 @@ module.exports = {
         //     result: data.dataValues
         // })
         if (req.method == 'POST') {
-            //method post ise datayı ekle
+            //urlden gelen method post ise datayı ekle
             //CREATE yap
             const data = await Todo.create(req.body)
             //errorhandler çalıştığı için hata yönetimine gerek yok
@@ -57,7 +60,7 @@ module.exports = {
             res.redirect('/view')
         } else {
             // metod get ise sadece formu göster
-            //FORM Görüntüle
+            //FORM Görüntüle, priority i gönder ki seçsin orda user
             res.render('todoCreate', { priority: PRIORITY })
         }
 

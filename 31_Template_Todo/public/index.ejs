@@ -14,10 +14,10 @@
     <p><a href="/api">API</a></p> <!-- hem json data al ver  -->
     <!-- pre yapınca trim yapmaz aşapıdaki boşlukları da basar ekrana -->
     <pre>
-        <!-- running js -->
-        <!-- burdaki <%  %> komutu node js komutu var anlamına gelir -->
+        <!-- running js/ Template ile JS komutları nasıl çalıştırılır onun örnekleri -->
+        <!-- burdaki <%  %> komutu node js komutu var anlamına gelir, bu semboller arasında dinamik node.js komutları çalıştırılır -->
         <% console.log('template run'); %>
-        <!-- ekrana - browser a güvenli modda dinamik olarak bişeyler yazdırmak -->
+        <!-- ekrana - browser a güvenli modda (yani varsa html kodlarını da basar ekrana) dinamik olarak bişeyler yazdırmak -->
         <%= '<p><b> Text </b></p>' %>
         <!-- ekrana - browser a direkt dinamik olarak bişeyler yazdırmak -->
         <%- '<p><b> Text </b></p>'  %>
