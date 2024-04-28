@@ -29,6 +29,7 @@ router.all('/', todo.list)
 router.all('/create', todo.create)
 
 router.all('/:id', todo.read)
+// template de yani tarayıcıda put delete gibi işlemler olmadığı için, güncelleme yapılacağı zaman URL den update isteği gelmesini sağlayacağız
 router.all('/:id/update', todo.update)
 router.all('/:id/delete', todo.delete)
 

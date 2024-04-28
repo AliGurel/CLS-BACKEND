@@ -70,12 +70,13 @@ module.exports = {
 
         // const data = await Todo.findOne({ where: { id: req.params.id } })
         const data = await Todo.findByPk(req.params.id)
+        // clg(data) yaptığımızda, data nın todos içinde dataValues objesinde geldiğini gördük
 
         // res.status(200).send({
         //     error: false,
         //     result: data
         // })
-        //clg(data) yapınca ihtiyacımız olan verilerin dataValues içinde olduğunu gördük o yüzden onu yazdık aşağıya
+        //clg(data) yapınca ihtiyacımız olan verilerin dataValues içinde olduğunu gördük o yüzden onu yazdık aşağıya, parametreleri ayarlarken böyle clg yapmakta fayda var
         res.render('todoRead', { todo: data.dataValues, priority: PRIORITY })
     },
 
@@ -123,7 +124,7 @@ module.exports = {
             // res.status(204).send()
             //? Sadece status çıktı ver:
             // res.sendStatus(204)
-            res.redirect('/view')
+            res.redirect('/view')// template de sadece bunu ekledi başka bişi yapmadık
         } else { // Silme gerçekleşmedi ise:
             // res.status(404).send({
             //     error: true,

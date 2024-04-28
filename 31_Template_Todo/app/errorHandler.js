@@ -14,6 +14,10 @@ module.exports = (err, req, res, next) => {
         // stack: err.stack, // error details
     }
 
+    // bu aşağıdaki kontrolü her controller da yapabiliriz
+    // şuan api ve view için ayrı ayrı ikicontroller oluşturduk
+    // aşağıdaki gibi yaparsak iki tane yapmaya gerek kalmaz
+
     if (req.originalUrl.startsWith('/api')){
         //url de api yazıyorsa api formatında çıktı ver ekrana
         res.status(errorStatusCode).send(data)
