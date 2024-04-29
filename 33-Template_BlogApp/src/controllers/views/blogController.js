@@ -135,14 +135,17 @@ module.exports.BlogPost = {
         //     result: data,
         // })
         if (req.method == 'POST') {
+
+            req.body.userId = req.session.user.id
         
             const data = await BlogPost.create(req.body)
 
             res.redirect('/')
 
         } else {
-
+            
             res.render('postForm', {
+                post: null,
                 categories: await BlogCategory.find()
             })
         }
@@ -153,7 +156,7 @@ module.exports.BlogPost = {
         // req.params.postId
         // const data = await BlogPost.findById(req.params.postId)
         const data = await BlogPost.findOne({ _id: req.params.postId }).populate('blogCategoryId') // get Primary Data
-        console.log(data)
+        // console.log(data)
 
         // res.status(200).send({
         //     error: false,
@@ -165,16 +168,25 @@ module.exports.BlogPost = {
     },
 
     update: async (req, res) => {
-        
-        // const data = await BlogPost.findByIdAndUpdate(req.params.postId, req.body, { new: true }) // return new-data
-        const data = await BlogPost.updateOne({ _id: req.params.postId }, req.body, { runValidators: true })
 
-        res.status(202).send({
-            error: false,
-            body: req.body,
-            result: data, // update infos
-            newData: await BlogPost.findOne({ _id: req.params.postId })
-        })
+        if(req.method == 'POST'){
+            const data = await BlogPost.updateOne({ _id: req.params.postId }, req.body, { runValidators: true })
+
+            // res.status(202).send({
+            //     error: false,
+            //     body: req.body,
+            //     result: data, // update infos
+            //     newData: await BlogPost.findOne({ _id: req.params.postId })
+            // })
+            res.redirect('/')
+        } else {
+            res.render('postForm', {
+                post: await BlogPost.findOne({ _id: req.params.postId }),
+                categories: await BlogCategory.find(),
+            })
+        }
+
+
 
     },
 
