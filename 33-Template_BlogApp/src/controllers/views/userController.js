@@ -74,59 +74,67 @@ module.exports.User = {
     },
 
     login: async (req, res) => {
+        // form gönderildiyse, yani kullanıcı giriş bilgilerini girip submit butonuna bastıysa
+        if (req.method == 'POST') {
+            const { email, password } = req.body
 
-        const { email, password } = req.body
+            if (email && password) {
 
-        if (email && password) {
+                // const user = await User.findOne({ email: email, password: passwordEncrypt(password) })
+                // No need passwordEncrypt, because using "set" in model:
+                const user = await User.findOne({ email: email, password: password })
+                if (user) {
 
-            // const user = await User.findOne({ email: email, password: passwordEncrypt(password) })
-            // No need passwordEncrypt, because using "set" in model:
-            const user = await User.findOne({ email: email, password: password })
-            if (user) {
-
-                // Set Session:
-                req.session = {
-                    user: {
-                        id: user.id,
-                        email: user.email,
-                        password: user.password
+                    // Set Session:
+                    req.session = {
+                        user: {
+                            id: user.id,
+                            email: user.email,
+                            password: user.password
+                        }
                     }
-                }
-                // Set Cookie:
-                if (req.body?.rememberMe) {
-                    // Set Cookie maxAge:
-                    req.sessionOptions.maxAge = 1000 * 60 * 60 * 24 * 3 // 3 Days
-                }
+                    // Set Cookie:
+                    if (req.body?.rememberMe) {
+                        // Set Cookie maxAge:
+                        req.sessionOptions.maxAge = 1000 * 60 * 60 * 24 * 3 // 3 Days
+                    }
 
-                res.status(200).send({
-                    error: false,
-                    result: user,
-                    session: req.session
-                })
+                    // res.status(200).send({
+                    //     error: false,
+                    //     result: user,
+                    //     session: req.session
+                    // })
+                    res.redirect('/')
+
+                } else {
+
+                    res.errorStatusCode = 401
+                    throw new Error('Login parameters are not true.')
+
+                }
 
             } else {
 
                 res.errorStatusCode = 401
-                throw new Error('Login parameters are not true.')
+                throw new Error('Email and Password are required.')
 
             }
-
-        } else {
-
-            res.errorStatusCode = 401
-            throw new Error('Email and Password are required.')
-
+        } else { //kullnıcı login değilken giriş formunu aç
+            res.render('loginform')
         }
+
+
 
     },
 
     logout: async (req, res) => {
         // Set session to null:
         req.session = null
-        res.status(200).send({
-            error: false,
-            message: 'Logout OK'
-        })
+        // res.status(200).send({
+        //     error: false,
+        //     message: 'Logout OK'
+        // })
+        res.redirect('/')
     },
 }
 

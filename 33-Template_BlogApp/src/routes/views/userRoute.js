@@ -27,13 +27,13 @@ router.all('/logout', User.logout)
 //     .put(User.update)
 //     .delete(User.delete)
 
-router.all('/', User.list)
+router.all('/user', User.list)
 //template de post olmadığı için create işlemine yönlendirmek için /create diyoruz,yani URL den alıyoruz
-router.all('/create', User.create)
-router.all('/:id', User.read)
+router.all('/user/create', User.create)
+router.all('/user/:id', User.read)
 //template de put olmadığı için update işlemine yönlendirmek için /update diyoruz,yani URL den alıyoruz
-router.all('/:id/update', User.update)
+router.all('/user/:id/update', User.update)
 //template de delete olmadığı için delete işlemine yönlendirmek için /delete diyoruz,yani URL den alıyoruz
-router.all('/:id/delete', User.delete)
+router.all('/user/:id/delete', User.delete)
 
 module.exports = router
