@@ -72,6 +72,7 @@ app.all('/', (req, res) => {
     // }else {
     //     res.send('<h1> WELCOME TO BLOG APP </h1>')
     // }
+    //ana sayfaya url isteği gelince views/blog/post a yönlendir demek
     res.redirect('/views/blog/post')
     // res.send('<h1> WELCOME TO BLOG APP </h1>')
 })
@@ -87,6 +88,8 @@ app.use('/api/blog', require('./src/routes/api/blogRoute'))
 // StaticFiles
 //url den /assets diye bir istek gelirse bu bir static dosyadır ve onları assets dosyasında ara
 app.use('/assets', express.static('./public/assets'))
+// hoca yukardaki gibi yazdırdı ama aşağıdaki gibi yazınca da oluyor
+// app.use(express.static('public'))
 
 /* ------------------------------------------------------- */
 // Synchronization:
