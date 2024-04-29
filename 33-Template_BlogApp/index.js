@@ -27,13 +27,15 @@ const PORT = process.env.PORT || 8000
 
 
 app.set('view engine', 'ejs')
-//Değiştirme yöntemi - 2 (kısa yol);
+//Değiştirme yöntemi - 2 (kısa yol), burda require etmemize gerek kalmadı;
 app.set('view options', {
     // delimiter: '%',
     openDelimiter: '{',
     closeDelimiter: '}',
 })
 
+//varsayılan olarak ejs dosyalatı views klasöründe olur, biz bunu aşağıdaki şekilde değiştirebiliriz,
+// burada public klasörü yaptık onu
 app.set('views', './public')
 
 
@@ -74,11 +76,11 @@ app.all('/', (req, res) => {
     // res.send('<h1> WELCOME TO BLOG APP </h1>')
 })
 
-// Routes: // Bunlar VIEWS yanei Template dir
+// Routes: // Bunlar VIEWS yani Template routingidir
 app.use('/views/user', require('./src/routes/views/userRoute'))
 app.use('/views/blog', require('./src/routes/views/blogRoute'))
 
-// Routes: // Bunlar API dir
+// Routes: // Bunlar API routingidir
 app.use('/api/user', require('./src/routes/api/userRoute'))
 app.use('/api/blog', require('./src/routes/api/blogRoute'))
 

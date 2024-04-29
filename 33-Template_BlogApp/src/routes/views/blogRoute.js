@@ -22,6 +22,7 @@ router.all('/category/:categoryId/delete', BlogCategory.delete)
 // ------------------------------------------
 // BlogPost
 // ------------------------------------------
+// URL: blog/post
 
 router.all('/post', BlogPost.list)
 router.all('/post/create', BlogPost.create)
@@ -29,6 +30,7 @@ router.all('/post/:postId', BlogPost.read)
 router.all('/post/:postId/update', BlogPost.update)
 router.all('/post/:postId/delete', BlogPost.delete)
 
+//Category altındaki post ları listeler
 router.all('/category/:categoryId/posts', BlogPost.listCategoryPosts)
 
 module.exports = router
