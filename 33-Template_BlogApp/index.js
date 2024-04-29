@@ -106,6 +106,8 @@ app.use('/api/blog', require('./src/routes/api/blogRoute'))
 app.use('/assets', express.static('./public/assets'))
 // hoca yukardaki gibi yazdırdı ama aşağıdaki gibi yazınca da oluyor
 // app.use(express.static('public'))
+// TinyMCE static files:
+app.use('/tinymce', express.static('./node_modules/tinymce'))
 
 /* ------------------------------------------------------- */
 // Synchronization:

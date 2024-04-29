@@ -84,8 +84,11 @@ module.exports.BlogCategory = {
 module.exports.BlogPost = {
 
     list: async (req, res) => {
+        //kullanıcı girişi olmuşsa tüm kayıtları göster
+        // olmammışsa sadece published olanları göster
+        const customFilter = req.session?.user ? {} : { published: true }
 
-        const data = await res.getModelList(BlogPost, { published: true }, 'blogCategoryId')
+        const data = await res.getModelList(BlogPost, customFilter, 'blogCategoryId')
 
         // res.status(200).send({
         //     error: false,
@@ -102,7 +105,7 @@ module.exports.BlogPost = {
             categories, 
             posts: data, 
             recentPosts,
-            details: await res.getModelListDetails(BlogPost, { published: true }),
+            details: await res.getModelListDetails(BlogPost, customFilter),
             pageUrl: (pageUrl.includes('?') ? pageUrl : pageUrl+'?')
         })
     },
