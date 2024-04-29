@@ -141,10 +141,11 @@ module.exports.BlogPost = {
         // const data = await BlogPost.findById(req.params.postId)
         const data = await BlogPost.findOne({ _id: req.params.postId }).populate('blogCategoryId') // get Primary Data
 
-        res.status(200).send({
-            error: false,
-            result: data
-        })
+        // res.status(200).send({
+        //     error: false,
+        //     result: data
+        // })
+        res.render('postRead', {post: data})
 
     },
 
