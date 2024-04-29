@@ -10,7 +10,7 @@ const { BlogCategory, BlogPost } = require('../../controllers/views/blogControll
 // ------------------------------------------
 // BlogCategory
 // ------------------------------------------
-// URL: blog/category
+// URL: /views/blog/category
 
 router.all('/category', BlogCategory.list)
 router.all('/category/create', BlogCategory.create)
@@ -22,7 +22,7 @@ router.all('/category/:categoryId/delete', BlogCategory.delete)
 // ------------------------------------------
 // BlogPost
 // ------------------------------------------
-// URL: blog/post
+// URL: /views/blog/post
 
 router.all('/post', BlogPost.list)
 router.all('/post/create', BlogPost.create)
