@@ -48,13 +48,13 @@ module.exports.middleFunc2 = (req, res, next) => {
 module.exports = {
 
     middleFunc1: (req, res, next) => {
-
+        console.log('middleFunc1 started.');
         req.message1 = 'middleFunc1 started.'
         next()
     },
     
     middleFunc2: (req, res, next) => {
-        
+        console.log('middleFunc2 started.');
         req.message2 = 'middleFunc2 started.'
         next()
     }

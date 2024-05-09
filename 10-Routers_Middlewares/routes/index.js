@@ -17,6 +17,10 @@ const router = require("express").Router()
 //2.YONTEM
 //router aşağıdaki gibi de tanımlanabilir;
 //İki yöntemin en önemli farkı; bu yöntemin daha derli toplu olmasıdır, tek url ye birden fazla metod tanımlaması yapılabilir.Yukardaki gibi yaparsak kod uzar
+
+const {middleFunc1, middleFunc2} = require('../middlewares/index')
+router.use(middleFunc1,middleFunc2)
+
 router.route('/')
     .get((req,res)=>res.send({message:'get'}))
     .post((req,res)=>res.send({message:'post'}))
