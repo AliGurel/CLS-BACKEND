@@ -22,7 +22,8 @@ const {middleFunc1, middleFunc2} = require('../middlewares/index')
 router.use(middleFunc1,middleFunc2)
 
 router.route('/')
-    .get((req,res)=>res.send({message:'get'}))
+    .get(middleFunc1, middleFunc2,(req,res)=>res.send({message:'get'}))//middlewareleri bu şekilde route un içinden de çağırabiliriz, yukarıda app.use için koymadan 
+    // .get((req,res)=>res.send({message:'get'}))
     .post((req,res)=>res.send({message:'post'}))
     .put((req,res)=>res.send({message:'put'}))
     .delete((req,res)=>res.send({message:'delete'}))
