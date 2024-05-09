@@ -29,8 +29,8 @@ app.get('/user/:id', (req, res) => {
             })
         }
     } catch (err) {
-        // next içinde bir hata objesi gönderirsek, errorHanler yakalar.
-        //next(err)
+        next içinde bir hata objesi gönderirsek, errorHanler yakalar.
+        next(err)
 
 
         res.send({
@@ -56,14 +56,17 @@ app.get('/*', (req, res) => {
 const asyncFunction = async() => {
     throw new Error ('Error in async function')
 }
+//? async fonksiyon içinden err yakalama, catch(next) ile
+// bu hatayı artık errorHndler yakalar
 app.get('/async', async (req, res, next) =>{
-    await asyncFunction().then().catch(next)
+    //await asyncFunction().then().catch((err)=>{next(err)}) // aşağıdaki bu yazımın kısaltılmış halidir
+    await asyncFunction().then().catch(next) // hata errorHandler a havale edildi
 })
 
 
 /* ------------------------------------------------------- */
 
-// npm i express-async-errors (otomatk hata kontrolü yapar yukarıdakine gerek yok)
+// npm i express-async-errors (async çalışan fonksiyonlarda otomatk hata kontrolü yapar yukarıdakine gerek yok)
 
 require('express-async-errors')
 
@@ -76,6 +79,8 @@ app.get('/async', async (req, res, next) =>{
 /* ------------------------------------------------------- */
 
 // //* ERROR HANDLER
+// errorHandler, 4 parametreli özel bir middleware dir
+// errorhandler da next kullanılmaz, sebebi bir hata varsa devam etmesin program çalışmaya
 // const errorHandler = (err, req,res,nex) => {
 //     console.log('ErrorHandler runned');
 
@@ -83,7 +88,8 @@ app.get('/async', async (req, res, next) =>{
 
 //     res.status(errorStatusCode).send({
 //         error : true,
-//         message : err.message
+//         message : err.message,
+//         stack: errorHandler.stack // sistemin hata mesajını json çıktısına ekler
 //     })
 // }
 // //? for run errorHandler call in use.
@@ -91,7 +97,7 @@ app.get('/async', async (req, res, next) =>{
 // app.use(errorHandler)
 /* ------------------------------------------------------- */
 
-// error handler
+// errorhandler çağrıldı import edildi, en sonda olması lazım errorHandler ın
 app.use(require('./errorHandler'))
 
 
