@@ -15,12 +15,14 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json())
 //? TEXT  u kabul et ve onu objeye çevir demektir
 app.use(express.text())
-//? Form-Data  u kabul et ve onu objeye çevir demektir
+//? Form-Data verilerini kabul et ve onu objeye çevir demektir
+//extented: true ise array datayı kabul et ve tanı demektir
 app.use(express.urlencoded({extented: true}))
 
 
 //open static files
 // /static yolunu ./public/images yoluna yönlendirdi
+//yani URL den /static isteği gelince mona lisa resmi açılacak
 app.use('/static', express.static('./public/images'))
 
 app.all('/',(req,res)=>{
