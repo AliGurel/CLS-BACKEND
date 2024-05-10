@@ -21,7 +21,8 @@ require('express-async-errors')
 // })
 //? app.all : Sadece belirtilen URL ye cevap verir, örn, yukarda /abc URL si için cevap verir, /abc/def gibi devam eden alt URL e cevap vermez
 //? app.use : belirtilen URL ve bu URL nin alt yollarına da cevap verir, örn, /abc ve /abc/def/rt gibi /abc ile başlayan tüm alt path lere de cevap verir
-/* ------------------------------------------------------- */
+/* ------------------------------------------------------- *
+//?MODELS
 //npm i sequelize sqlite3 for SQLite DB
 
 const { Sequelize, DataTypes} = require('sequelize')
@@ -87,8 +88,11 @@ const Todo = sequelize.define('todos',{
 sequelize.authenticate()
     .then(()=>console.log('**DB connected**'))
     .catch(()=>console.log('**DB Not Connected**'))
-
 /*----------------------------------------------------------*/
+
+const Todo = require('./app/models/todo.model')
+
+/*----------------------------------------------------------*
 // ROUTERS
 const router = express.Router()
 
@@ -181,21 +185,13 @@ router.delete('/:id', async (req,res)=>{
 
 })
 
-
 app.use(router)
-
+/* ------------------------------------------------------- */
+//Routes:
+app.use(require('./app/routes/todo.router'))
 
 /* ------------------------------------------------------- */
-const errorHandler = (err, req, res, next) => {
-    const errorStatusCode = res.errorStatusCode ?? 500
-    console.log('errorHandler worked.')
-    res.status(errorStatusCode).send({
-        error: true, // special data
-        message: err.message, // error string message
-        cause: err.cause, // error option cause
-        // stack: err.stack, // error details
-    })
-}
-app.use(errorHandler)
+//ErrorHandler
+app.use(require('./app/errorhandler'))
 /* ------------------------------------------------------- */
 app.listen(PORT, () => console.log("Running: http://127.0.0.1:" + PORT));
