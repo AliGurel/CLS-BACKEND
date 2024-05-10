@@ -19,12 +19,14 @@ require('express-async-errors')
 // app.all('/abc', (req, res) => { // Allow all methods. all -> URL=/ - use -> URL=/*
 //     res.send('WELCOME TO TODO API')
 // })
+//? app.all : Sadece belirtilen URL ye cevap verir, örn, yukarda /abc URL si için cevap verir, /abc/def gibi devam eden alt URL e cevap vermez
+//? app.use : belirtilen URL ve bu URL nin alt yollarına da cevap verir, örn, /abc ve /abc/def/rt gibi /abc ile başlayan tüm alt path lere de cevap verir
 /* ------------------------------------------------------- */
-const { Sequelize, DataTypes} = require('sequelize')
-const sequelize = new Sequelize('sqlite:./db.sqlite3')
+//npm i sequelize sqlite3 for SQLite DB
 
-//define metodu sequelize modeli oluşturur
-// her bir model veritababında bir tabloya denk gelir
+const { Sequelize, DataTypes} = require('sequelize')
+// Sequelize bir motordur
+const sequelize = new Sequelize('sqlite:./db.sqlite3')
 
 // define methodu sequelize modeli olusturur:
 // her bir model, veritabaninda bir tabloya denk gelir.
@@ -50,7 +52,7 @@ const Todo = sequelize.define('todos',{
 
     description: DataTypes.TEXT, // kısa kullanım eğer sadece veri tipi verip başka özellik tanımlamayacaksak
 
-    priority: {
+    priority: { // -1 Low, 0: Normal, 1: High
         type: DataTypes.TINYINT,
         allowNull: false,
         default: 0
@@ -60,26 +62,37 @@ const Todo = sequelize.define('todos',{
         allowNull: false,
         default: false
     }
-    // diğerlerine gerek yok kendi tanımlıyor oto olarak
+    // diğerlerine (createdAt ve upatedAt)gerek yok kendi tanımlıyor oto olarak
 
 })
 
-// Senkronizasyon yani model bilgilerini DB ye uygula
-//sequelize.sync()// aynı adda tablo yoksa oluşturur, varsa işlem yapmaz
+//? Senkronizasyon yapmak lazım model tanımından sonra, yani model bilgilerini DB ye uygula
+//?ilk defa modeli uyguluyorsak aşağıdaki komutu yazmak yeterli
+//?eğer yaptığımız modelde güncelleme yapacaksak alttaki alter:true olan kodu çalıştır
+//sequelize.sync()// aynı isimli tablo yoksa oluşturur, varsa işlem yapmaz, açık kalsa da içindeki veliler kalır
+
+
 // sequelize.sync({force:true}) // aynı adda tablo varsa siler yeniden oluşturur, datalar varsa silinir
-// sequelize.sync({alter:true}) // to backup , drop table, create table from backup, önceki veriler silinmez
+// bu komudu örneğin fieldname lerde bi değişiklik yapacaksak kullanmalıyız
+//Bu komut sürekli açık kalmamalı, yoksa DB deki var olan veriler silinir
+
+// sequelize.sync({alter:true}) // to backup, drop table, create table from backup, önceki veriler silinmez
+// bu komut ile fieldname vs güncellemeler yapılırken varolan veriler silinmez 
+
 
 // connect to db
+//async fonk olduğu için then ve catch ekliyormuşuz
+//Mongoda bu yok, kendi bağlanıyomuş
 sequelize.authenticate()
     .then(()=>console.log('**DB connected**'))
     .catch(()=>console.log('**DB Not Connected**'))
 
+/*----------------------------------------------------------*/
 // ROUTERS
-
 const router = express.Router()
 
 //LIST TODOS
-router.get('/',async(req,res)=>{
+router.get('/', async(req,res)=>{
     //const data = await Todo.findAll()
     const data = await Todo.findAndCountAll()
     res.status(200).send({
@@ -89,16 +102,21 @@ router.get('/',async(req,res)=>{
 })
 
 
+//CREATE new TODO
+router.post('/', async (req,res)=>{ //async olayı Sequelize e özel, mongoda yok
+    //?veri almanın uzun hali aşağıdaki gibi
+    // const receivedData = req.body //datayı req.body den al
+    // const data = await Todo.create({
+    //     // title: receivedData.title,
+    //     title: req.body.title,
+    //     description : receivedData.description,
+    //     priority : receivedData.priority,
+    //     isDone: receivedData.isDone
+    // })
+    //? veri almanın kısa hali;
+    const data = await Todo.create(req.body)
 
-router.post('/', async (req,res)=>{
-    
-    const receivedData = req.body
-    const data = await Todo.create({
-        title: receivedData.title,
-        description : receivedData.description,
-        priority : receivedData.priority,
-        isDone: receivedData.isDone
-    })
+    // console.log(data); // clg yaparsak dönen datanın dataValues içinde olduğunu görüyoruz, bunu da aşağıda kullanıcaz
     res.status(201).send({
         error:false,
         result: data.dataValues
@@ -109,7 +127,6 @@ router.post('/', async (req,res)=>{
 router.get('/:id', async (req,res)=>{
     // const data = await Todo.findOne({ where: {id: req.params.id}})
     const data = await Todo.findByPk(req.params.id) // yukardakiyle aynı işi yapar
-
 
     res.status(200).send({
         error:false,
