@@ -67,4 +67,4 @@ app.use(require('./src/middlewares/errorHandler')) // aşağıda olması önemli
 app.listen(PORT, () => { console.log('Server running on http://' + HOST + ':' + PORT); })
 
 
-require('./src/sync')() //bir kere çalıştırınca sonra yoruma alıyoruz
+// require('./src/sync')() //bir kere çalıştırınca sonra yoruma alıyoruz
