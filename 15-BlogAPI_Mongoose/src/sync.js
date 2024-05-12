@@ -13,7 +13,7 @@ module.exports = async () => {
 
     // if (blogCategory) {
     //     BlogPost.updateMany({ //? Filter:
-    //         "blogCategoryId": { $exists: false } // field yok ise
+    //         "blogCategoryId": { $exists: false } // blogCategoryId fieldi olmayanlar 
     //     }, { //? Update:
     //         "blogCategoryId": blogCategory._id // kaydı ata
     //     }).catch(err => console.log(err))
