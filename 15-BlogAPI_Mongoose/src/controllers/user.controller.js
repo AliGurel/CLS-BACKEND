@@ -68,17 +68,15 @@ module.exports = {
                 //     password: user.password
                 // }
                 //yukarıdakinin kısaltılmış hali aşağıda, kullanıcı bilgilerini cookielre kaydediyoruz
-                //req.session.email = user.email
+                //req.session.email = user.email // mail güvenli değil diye id sini verelim dedik
                 req.session.id = user.id
-                req.session.password = user.password
+                req.session.password = user.password //şifrelenmiş pass
 
                 /*COOKIES*/
-                if (req.body?.remindMe) {
+                if (req.body?.remindMe) {//kullancı remind me seçeneğini tıklmaışsa
                     req.session.remindMe = req.body.remindMe
                     req.sessionOptions.maxAge = 1000 * 60 * 60 * 24 * 3 // 3 gün boyunca sakla
                 }
-                /*COOKIES*/
-
 
                 res.status(200).send({
                     error: false,
@@ -95,7 +93,7 @@ module.exports = {
             throw new Error('Email and password are required')
         }
     },
-
+    //session verilerini silersek kullanıcı çıkış yapmış olur
     logout: async (req, res) => {
         req.session = null
 

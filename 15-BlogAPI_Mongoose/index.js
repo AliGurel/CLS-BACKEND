@@ -21,10 +21,11 @@ require('./src/configs/dbConnection') // yukarıda olması mantıklı, DB bağla
 // https://www.npmjs.com/package/cookie-session
 //* $ npm i cookie-session
 /* ------------------------------------------------------- */
-const session = require('cookie-session')
+const session = require('cookie-session') // bu aynı zamanda bi middleware dir, burada bir kere require edildikten sonra artık sistemin genelinden, herhangi bir controllerden mesela erişilip kullanılabilir
 app.use(session({
-    secret: process.env.SECRET_KEY,        //şifreleme anahtarı
+    secret: process.env.SECRET_KEY,        //şifreleme anahtarı, veriyi kaydederken şifreleyip kaydediyor
     //maxAge: 1000 * 60 * 60 * 24 * 3 //miliseconds cinsnden olduğu için (3 gün oldu şimdi)
+    //maxAge i burda kullanmıcaz çünkü burda yaparsak global ayar olur ve artık her cookie 3 gün ömre sahip olur
 }))
 
 // giriş yapan kullanıcıyı kontrol et
@@ -55,7 +56,7 @@ app.all('/', (req, res) => {
     res.send({
         error:false,
         message: 'WELCOME TO BLOGAPI',
-        session: req.session
+        session: req.session // user.controller/login de session lara kaydettiğimiz dataları buradan da erişebildiğimi gösterir
     })
 })
 
