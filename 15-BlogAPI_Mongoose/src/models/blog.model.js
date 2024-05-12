@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 
 //BLOG CATEGORY
 const blogCategorySchema = new mongoose.Schema({
-
+    // Mongoose JS veri tiplerini tanıyor
     name: {
         type: String,
         trim: true,
