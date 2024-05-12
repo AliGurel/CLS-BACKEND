@@ -25,21 +25,22 @@ const UserSchema = new mongoose.Schema({
         type: String,
         trim: true,
         // unique: true,
-        unique: [true, 'Email must be unique.'],
+        unique: [true, 'Email must be unique.'],//işe yaramayabilir
         // required: true,
         required: [true, 'Email must be required.'],
         // validate: (email) => { return true },
         // validate: [
-        //     (email) => {
+        //     (email) => { //email datasını mongoose gönderiyoru bu fonk a
         //         if (email.includes('@') && email.includes('.')) {
         //             return true
         //         }
         //         return false
         //     },
-        //     'Email type is incorrect'
+        //     'Email type is incorrect' //return false olduğu zaman yayınlamak istediğmiz mesaj
         // ],
+        //yukarıdakinin kısa yolu ;
         validate: [
-            (email) => (email.includes('@') && email.includes('.')),
+            (email) => (email.includes('@') && email.includes('.')),//bunu ilerde regex ile yaptık
             'Email type is incorrect'
         ]
 
