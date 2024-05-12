@@ -87,7 +87,8 @@ const nameSchema = new mongoose.Schema(
             index: false, // aramalrda erişimi hızlandırır
             required: true,// veri girişi gerekli mi
             required: [true, 'error message yazabilirsin'],
-            enum: [[1,2,3],'error message ayzabilirsin'], // belirli bir pattern e göre veri girişi kısıtlanabilir
+            enum: [[1,2,3],'error message ayzabilirsin'], // belirli bir pattern e göre veri girişi kısıtlanabilir,
+            //mesela burada kullanıcı sadece 1,2 ve 3 dn birini girebilir.
             validate: [function(data){return true},'error messgae yazabilirsin'], // veriyi fonk ile doğrulama
             get: function(data){return data}, // veri çağırırken çalışacak fonk
             set: function(data){return data}, // veri kaydederken çalışacak fonk
@@ -95,7 +96,7 @@ const nameSchema = new mongoose.Schema(
 
     },
     {
-        collection : 'MyCollectionName', // tablo ismi
+        collection : 'collectionName', // tablo ismi, çoğul isim oluyor piyasa standardı
         timestamps : true, // obje kayıt tarihi, obje içerik update tarihini tutar
 
     }

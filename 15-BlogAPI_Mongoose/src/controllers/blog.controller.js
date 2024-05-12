@@ -130,7 +130,7 @@ module.exports.BlogPost = {
     },
     delete: async(req,res)=>{
         const data = await BlogPost.deleteOne({_id:req.params.postId}) 
-        res.sendstatus((data.deletedCount >=1)? 204:404)
+        res.sendStatus((data.deletedCount >=1)? 204:404)
     },
     read: async(req,res)=>{
         const data = await BlogPost.findOne({_id:req.params.postId}).populate('blogCategoryId')
