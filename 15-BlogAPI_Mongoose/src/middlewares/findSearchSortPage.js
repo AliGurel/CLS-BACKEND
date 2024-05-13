@@ -26,7 +26,7 @@ module.exports = (req, res, next) => {
 
     const search = req.query?.search || {} //uery de search boşsa sonuc gelmezse boş obje kalsın
     //http://127.0.0.1:8000/blog/posts?search[title]=0 title&search[content]=test // title içinde '0 title' ve content içinde 'test' geçenleri getir eşit olanlar değil
-    console.log(search) //bu query den dönen sonuç ; { title: '0 title', content: 'test' }
+    // console.log(search) //bu query den dönen sonuç ; { title: '0 title', content: 'test' }
 
     //eğer search i, filter gibi direkt { title: '0 title', content: 'test' } bu örnekteki gibi find() metodunun içinde koyarsak içinde geçenleri değil eşit olanlar arar. Bu da işimize yaramaz, bunun için Regex kullanıcaz;
 
@@ -36,7 +36,7 @@ module.exports = (req, res, next) => {
     for (let key in search) {
         search[key] = { $regex: search[key], $options: 'i' } // büyük hafr küçük harf duyarlı değil olur options i ile beraber
     }
-    console.log(search) // çıkış formatı;
+    // console.log(search) // çıktı formatı;
     /*
         {
         title: { '$regex': '0 title', '$options': 'i' },
