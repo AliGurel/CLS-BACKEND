@@ -35,6 +35,9 @@ module.exports = (req, res, next) => {
 
     for (let key in search) {
         search[key] = { $regex: search[key], $options: 'i' } // büyük hafr küçük harf duyarlı değil olur options i ile beraber
+        //yukardaki döngünün yaptığı iş aşağıda;
+        // search['title'] = {$regex: search['title'] }
+        // search['content'] = {$regex: search['content'] }
     }
     // console.log(search) // çıktı formatı;
     /*
@@ -49,27 +52,33 @@ module.exports = (req, res, next) => {
     // yukardaki ikisi de aynı sonucu verir
     //Bu URL leri göndermek FE nin işi
 
-    //SORTING
-    // URL?sort[key1]=asc&sort[key2]=desc
+    //?SORTING
+    // URL?sort[title]=desc
     // asc: A-Z - desc: Z-A // asc:1 desc:-1 deprecated oldu
     const sort = req.query?.sort || {}
-    //console.log(sort);
+    // console.log(sort);
+    //yukardaki query yapılınca gelen sonuç : { title: 'desc' }, sort un içinde bu obje var
 
-    //PAGINATION
+    //?PAGINATION
     // URL?page=3&limit=10
 
+    //LIMIT
     let limit = Number(req.query?.limit)
-    limit = limit > 0 ? limit : Number(process.env.PAGE_SIZE || 20) // lmit 0 dan büyükse kabul et, değilse 20 olark default değer ata // env deki değerler her zaman str dir, o ndenle number a çevirdik
-    //console.log('limit', limit)
+    //URL den limit değeri alınıp Number a çevrilecek, limit hiç gelmediğinde veya sayı harici bir veri gönderildiğinde NaN yani 0 kabul edicek
 
-    //Page
+    limit = limit > 0 ? limit : Number(process.env.PAGE_SIZE || 20) // lmit 0 dan büyükse kabul et, değilse 20 olark default değer ata 
+    // env deki değerler her zaman str dir, o ndenle number a çevirdik
+    // console.log('limit', limit)
+
+    //PAGE
     let page = Number(req.query?.page)
     // page = page > 0 ? page : 1
-    page = page > 0 ? (page - 1) : 0 // Backend 'de sayfa sayısı her zmaan page-1 olarak hesaplanmalı.
+    page = page > 0 ? (page - 1) : 0 // Backend'de sayfa sayısı her zmaan page-1 olarak hesaplanmalı.
     //console.log('page', page)
+    //sort veya limit gibi direkt page metodu yok o nedenle skip kullancaz
 
     //SKIP
-    // LIMIT 20, 10
+    // LIMIT 20, 10 => 20 kayıt atla sonraki 10 kaydı göster, SQL komutu bu, ama skip metodu da aynı mantık
     let skip = Number(req.query?.skip)
     skip = skip > 0 ? skip : (page * limit)
     //console.log('skip', skip)
@@ -77,6 +86,7 @@ module.exports = (req, res, next) => {
     /* FILTERING & SEARCHING & SORTING & PAGINATION */
 
     // const data = await BlogPost.find({ ...filter, ...search }).sort(sort).skip(skip).limit(limit)
+    //yukardaki komutu getModelList fonk içinde kullandık
 
     res.getModelList = async function (Model, populate = null) {
         return await Model.find({ ...filter, ...search }).sort(sort).skip(skip).limit(limit).populate(populate)
