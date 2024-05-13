@@ -28,11 +28,16 @@ app.use(session({
     //maxAge i burda kullanmıcaz çünkü burda yaparsak global ayar olur ve artık her cookie 3 gün ömre sahip olur
 }))
 
+/*------------------------------------------------------*/
+//MIDDLEWARES;
+
 // giriş yapan kullanıcıyı kontrol et
 app.use(require('./src/middlewares/userControl'))
 
-// Filter, Sort, Saerch
+// Filter, Sort, Search
 app.use(require('./src/middlewares/findSearchSortPage'))
+
+/*------------------------------------------------------*/
 
 require('express-async-errors')// bunu burda yapmadı ama yine de çalıştı. Diğer js dosyalarının birinde çağırdı
 

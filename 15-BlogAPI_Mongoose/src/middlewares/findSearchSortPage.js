@@ -1,8 +1,12 @@
 'use strict'
+/*==================================================*/
+/*              QUERY HANDLER MIDDLEWARE            */            
+/*==================================================*/
 
 module.exports = (req, res, next) => {
 
     /* FILTERING & SEARCHING & SORTING & PAGINATION */
+    //bu aslında fonk de olabilirdi ama URL den veri çektiğimiz için middleware olarak yaptık
     //http://127.0.0.1:8000/blog/posts?search[title]=test&filter[published]=1&sort[createdAt]=asc
 
     //? FILTERING // URL?filter[key1]=value1&filter[key2]=value2

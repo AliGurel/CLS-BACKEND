@@ -101,7 +101,8 @@ module.exports.BlogPost = {
 
         // const data = await BlogPost.find({ ...filter, ...search }).sort(sort).skip(skip).limit(limit) // yukarıda filtrelenen sonucu gösteriyor
 
-        const data = await res.getModelList(BlogPost, 'blogCategoryId')
+        //res.getModelList dememizin sebebi middleware de getModelList fonk nunu res parametresine atamış olmamız
+        const data = await res.getModelList(BlogPost, 'blogCategoryId') // blogCategoryId populate dir
 
         res.status(200).send({
             error:false,
