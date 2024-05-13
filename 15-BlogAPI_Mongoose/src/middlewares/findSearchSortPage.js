@@ -5,21 +5,49 @@ module.exports = (req, res, next) => {
     /* FILTERING & SEARCHING & SORTING & PAGINATION */
     //http://127.0.0.1:8000/blog/posts?search[title]=test&filter[published]=1&sort[createdAt]=asc
 
-    // FILTERING // URL?filter[key1]=value1&filter[key2]=value2
-    const filter = req.query?.filter || {} // filterden veri gelmezse boş obje olarak kalsın
+    //? FILTERING // URL?filter[key1]=value1&filter[key2]=value2
+    // console.log(req.query);
+    /*clg sonucu; veriler req.query içinde bir obje içinde key-value olarak döndürülüyor
+        {
+        search: { title: 'test' },
+        filter: { published: '1' },
+        sort: { createdAt: 'asc' }
+        }
+    */
+    //yukarıdaki clg sonucu dönen veriden anlaşılacağı üzere, req.query.search dersek örneğin title='test' gelecek.
+    const filter = req.query?.filter || {} // query de filter boşsa, veri gelmezse boş obje olarak kalsın
+    // console.log(filter); //http://127.0.0.1:8000/blog/posts?filter[blogCategoryId]=6640d4140b05ba3d08bb3654
+    //dönen sonuç ; { blogCategoryId: '6640d4140b05ba3d08bb3654' }
 
-    //SEARCHING
+    //?SEARCHING
     // URL?search[key1]=value1&search[key2]=value2
     // https://www.mongodb.com/docs/manual/reference/operator/query/regex/
-    const search = req.query?.search || {} // sonuc gelmezse boş obje kalsın
-    //console.log(search)
     // URL query lerde true/false yazılmaz 1/0 yazılır
 
-    //? { title: 'test', content: 'test' } -> { title: { $regex: 'test' }, content: { $regex: 'test' } }
+    const search = req.query?.search || {} //uery de search boşsa sonuc gelmezse boş obje kalsın
+    //http://127.0.0.1:8000/blog/posts?search[title]=0 title&search[content]=test // title içinde '0 title' ve content içinde 'test' geçenleri getir eşit olanlar değil
+    console.log(search) //bu query den dönen sonuç ; { title: '0 title', content: 'test' }
+
+    //eğer search i, filter gibi direkt { title: '0 title', content: 'test' } bu örnekteki gibi find() metodunun içinde koyarsak içinde geçenleri değil eşit olanlar arar. Bu da işimize yaramaz, bunun için Regex kullanıcaz;
+
+    //? { title: '0 title', content: 'test' } elimizde bu veri var ama bu haliyle işimize yaramıyor, bu veriyi     { title: { $regex: '0 title' }, content: { $regex: 'test' } } buradaki formata regex ile çevireceğiz
+    // bu formatı https://www.mongodb.com/docs/manual/reference/operator/query/regex/ den aldı
+
     for (let key in search) {
         search[key] = { $regex: search[key], $options: 'i' } // büyük hafr küçük harf duyarlı değil olur options i ile beraber
     }
-    //console.log(search)
+    console.log(search) // çıkış formatı;
+    /*
+        {
+        title: { '$regex': '0 title', '$options': 'i' },
+        content: { '$regex': 'test', '$options': 'i' }
+        }
+    */
+    //? URL query de filter, sort, search sıralaması önemli değil !
+    //http://127.0.0.1:8000/blog/posts?search[title]=test 10&filter[published]=1&sort[createdAt]=asc
+    //http://127.0.0.1:8000/blog/posts?filter[published]=1&sort[createdAt]=asc&search[title]=test 10
+    // yukardaki ikisi de aynı sonucu verir
+    //Bu URL leri göndermek FE nin işi
 
     //SORTING
     // URL?sort[key1]=asc&sort[key2]=desc
@@ -50,7 +78,7 @@ module.exports = (req, res, next) => {
 
     // const data = await BlogPost.find({ ...filter, ...search }).sort(sort).skip(skip).limit(limit)
 
-    res.getModelList = async function (Model,populate = null) {
+    res.getModelList = async function (Model, populate = null) {
         return await Model.find({ ...filter, ...search }).sort(sort).skip(skip).limit(limit).populate(populate)
     }
 
