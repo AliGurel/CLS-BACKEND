@@ -21,7 +21,7 @@ const TokenSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, //foreign key
         ref: 'Personnel', 
         required: true,
-        index: true, //daha hızlı erişim sağlamak için, RAM desteği alır, özellikle AQL vt lerde önemli
+        index: true, //daha hızlı erişim sağlamak için, RAM desteği alır, özellikle SQL vt lerde önemli
         unique: true,
     },
     token: {

@@ -2,7 +2,7 @@
 /* -------------------------------------------------------
     EXPRESS - Personnel API
 ------------------------------------------------------- */
-
+//?Normalde TOKEN a controller yazmaya gerek yok dedi ?
 const Token = require("../models/token.model");
 
 module.exports = {
