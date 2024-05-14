@@ -33,7 +33,7 @@ module.exports = {
         if (username && password) {
 
             const user = await Personnel.findOne({ username, password })
-            //? findOne, passwordu modeldeki set metodundaki encrypt i kullanarak db'de filtreleme yapar
+            //? findOne, passwordu modeldeki set metodundaki encrypt i kullanarak şifreler ve db'de şifreli haliyle filtreleme/arama yapar
 
             if (user && user.isActive) { // böyle bir user var mı ve aktif mi
                 /*SESSION*
@@ -90,6 +90,7 @@ module.exports = {
 
         /*TOKEN*/
         // var olan token i sileceğiz
+        
         // 1.Yöntem (kısa yöntem) Her kullanıcının 1 adet token i var ise bu yöntemi kullan
         // tüm cihazlardan çıkış yap demek bu
         //const deleted = await Token.deleteOne({userId: req.user._id}) //ilgili userId e ait token ı bul ve sil
