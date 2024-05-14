@@ -32,7 +32,6 @@ module.exports = {
 
   create: async (req, res) => {
 
-
         /*
             #swagger.tags = ["Departments"]
             #swagger.summary = "Create Department"
