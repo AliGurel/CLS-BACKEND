@@ -21,6 +21,7 @@ router.route('/:id')
     .patch(permission.isAdmin, department.update)
     .delete(permission.isAdmin, department.delete)
 
+// ilgili departmanda çalışan personelleri listelemek için yazıldı bu route
 router.get('/:id/personnels',permission.isAdminOrLead, department.personnels)
 
 /* ------------------------------------------------------- */

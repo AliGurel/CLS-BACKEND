@@ -56,10 +56,11 @@ module.exports = {
         const isLead = req.body?.isLead || false // isLead bilgisini req ten aldık
         if (isLead) { //isLead true ise yani varsa
 
-            const xyz = await Personnel.updateMany({ departmentId: req.body.departmentId, isLead: true }, { isLead: false })
+            await Personnel.updateMany({ departmentId: req.body.departmentId, isLead: true }, { isLead: false })
 
             //departman idsi req.departmen id sine eşit olan departmanı getir, içindeki isLEad i true olanları filtrele, bunların hepsini false yap
-            //sadece son gelen istekteki işLead true kalacak, diğerleri false olacak
+            //sadece son gelen istekteki isLead true kalacak, diğerleri false olacak
+            // bu isLead kontrolü, aşağıdaki yeni kullanıcı creat işleminden önce olduğu için, eğer yeni eklenen personel isLead ise önce eski personeldeki varsa tüm Leadler false a çekilcek, sonra bu yeni isLead olan personel create işlemi aşağıda yapılacak
         }
 
         const data = await Personnel.create(req.body)
@@ -117,20 +118,16 @@ module.exports = {
 
         // isLead Control:
         const isLead = req.body?.isLead || false
+        //güncellenecek personel isLead mi ? 
+        //Eğer isLead ise;
         if (isLead) {
-            const { departmentId } = await Personnel.findOne(
-                { _id: req.params.id },
-                { departmentId: 1 }
-            )
-            await Personnel.updateMany(
-                { departmentId, isLead: true },
-                { isLead: false }
-            )
+            const { departmentId } = await Personnel.findOne({ _id: req.params.id },{ departmentId: 1 })
+            await Personnel.updateMany({ departmentId, isLead: true },{ isLead: false })
         }
 
         //personel modelin içinden id si req ten gelen id ye eşit olan personeli bul, bu personelin departman id sini yani departmanını bul, 
+        // { departmentId: 1 } veya { departmentId: true }komutu, bulunan personelin verilerinin hepsini değil sadece departmentID verisini getir demek. Bu gelen veriyi de destructure ile departmenID ye o yüzden eşitledi
         //bu departmandaki isLead ı true olanları çek ve false a çevir  
-
 
 
         const data = await Personnel.updateOne({ _id: req.params.id }, req.body, { runValidators: true })

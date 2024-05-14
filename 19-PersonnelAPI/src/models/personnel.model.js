@@ -85,7 +85,7 @@ const PersonnelSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
+    //personelin departmana katılış tarihi
     startedAt: {
       type: Date,
       default: Date.now(),
