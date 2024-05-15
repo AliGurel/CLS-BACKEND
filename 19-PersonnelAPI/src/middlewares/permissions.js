@@ -5,11 +5,11 @@
 // Middleware: permissions (authorization) -- yetki kontrolü
 
 module.exports = {
-    // 3 tane kontrol permisson middleware i yazdık
+    // 4 tane kontrol permisson middleware i yazdık, hepsi middleware dir (isLogin, isAdmin ...)
     // departman isimlerini login olan herkes görebilir, kaç departman vb var gibi
     isLogin: (req, res, next) => {
-        if(req.user && req.user.isActive){ //kullanıcı hesabıvarsa ve tipi aktif se, banlanmamışsa
-            //req.user authentication.js middlewareindan dosyasından geliyor, global erişimi olan bir değişkendi o yüzen require edilmedi
+        if(req.user && req.user.isActive){ //kullanıcı hesabı varsa ve tipi aktif se, banlanmamışsa
+            //req.user authentication.js middlewareindan geliyor, global erişimi olan bir değişkendi o
             next()
         } else {
             res.errorStatusCode = 403

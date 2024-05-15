@@ -35,7 +35,7 @@ module.exports = {
             const user = await Personnel.findOne({ username, password })
             //? findOne, passwordu modeldeki set metodundaki encrypt i kullanarak şifreler ve db'de şifreli haliyle filtreleme/arama yapar
 
-            if (user && user.isActive) { // böyle bir user var mı ve aktif mi
+            if (user && user.isActive) { // böyle bir user var mı ve aktif mi banlı değil mi
                 /*SESSION*
                 // Set Session:
                 req.session = {
@@ -91,21 +91,23 @@ module.exports = {
         /*TOKEN*/
         // var olan token i sileceğiz
         
-        // 1.Yöntem (kısa yöntem) Her kullanıcının 1 adet token i var ise bu yöntemi kullan
-        // tüm cihazlardan çıkış yap demek bu
+        //* 1.Yöntem (kısa yöntem) Her kullanıcının 1 adet token i var ise bu yöntemi kullan
+        //? tüm cihazlardan çıkış yap demek bu
         //const deleted = await Token.deleteOne({userId: req.user._id}) //ilgili userId e ait token ı bul ve sil
+        // buradaki req.user ı, authentication.js middlewareinde kendimiz oluşturmuştuk
 
-        //2.Yöntem
-        //bir kullanıcıya birden fazla token vermek istersek bu yöntemi kullanacaz (çoklu cihaz)
+        //*2.Yöntem (Bu yöntemi kullanmak daha iyi)
+        //?bir kullanıcıya birden fazla token vermek istersek bu yöntemi kullanacaz (çoklu cihaz)
         const auth = req.headers?.authorization || null // Token ...tokenKey... veri authoizationda bu şekilde gelir
-        //istekteki header da authorizaiton bilgisi var ı yani token var mı ? kontrolü
+        //istekteki header da authorizaiton bilgisi var mı yani token var mı ? kontrolü
 
         const tokenKey = auth ? auth.split(' ') : null // ['Token', '...tokenKey...']
         //bize sadece tokenKey lazım olduğu için split ettik ve array elde ettik
 
-        let deleted = null;
+        let deleted = null; //bunu isteğe bağlı yaptk, ekrana verileri bassın diye
         if (tokenKey && tokenKey[0] == 'Token') {
-            const deleted = await Token.deleteOne({ token: tokenKey[1] })
+            deleted = await Token.deleteOne({ token: tokenKey[1] })
+            console.log(deleted); // çıktısı => { acknowledged: true, deletedCount: 1 }
         }
 
         /*TOKEN*/

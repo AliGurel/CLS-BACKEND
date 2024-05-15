@@ -12,7 +12,7 @@ const permission = require('../middlewares/permissions')
 // URL: /departments // gelen isteğin ilk parçası, index.js ten gelen
 
 router.route('/')
-    .get(permission.isLogin, department.list)//isLogin kontrolünü yap, eğer login olmuşsa list çalışsın
+    .get(permission.isLogin, department.list)//isLogin kontrolünü yap, eğer login olmuşsa next() yani list çalışsın
     .post(permission.isAdmin, department.create)//admin olmayanlar departman oluşturamaz
 
 router.route('/:id')
