@@ -12,6 +12,7 @@ module.exports = {
     // LOGIN & LOGOUT
 
     login: async (req, res) => {
+        //gruplama yapmak için #swagger.tags kullanıyoruz
         /*
             #swagger.tags = ['Authentication'] 
             #swagger.summary = 'Login' 
