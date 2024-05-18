@@ -8,7 +8,7 @@
 //? $ npm i morgan
 
 const morgan = require('morgan') //morgan bir middleware dir app.use ile çağrılır
-const fs = require('node:fs')
+const fs = require('node:fs')//dosya yazma gibi dosya işlemleri için dahili built in modül olan fs modülü kullan
 
 // log kayıtlarını günlük tutmak için;
 const now = new Date() // çıktısı 2024-03-21T19:50:49.374Z şeklinde bir objedir, önce bu objeyi split edebilmek için STRING e çeviricez sonra sadece tarihi almak için T ye göre split edicez
@@ -21,9 +21,8 @@ const today = now.toISOString().split('T')[0] //ISOString, yukarıdaki formatta 
 
 
 // Aşağıdaki komutla birlikte, proje ana dizininde logs isimli klasör altında her gün için bir log dosyası açılacak
-// flags : 'a+' bu dosyanın hem oluşturulması hem de yazılması izinleri için verildi
 // 1. parametre: combined: format adıdır, log kaydında hangi detaylar olsun onu belirler
-// 2. paramatre ise bu log kayıtlarıı dosyaya yaz demektir
+// 2. paramatre ise bu log kayıtlarını dosyaya yaz demektir
 // stream akış demektir, log kayıtları bir akıştır dedi hoca
 // createWriteStream(), fs modülünde akışları kaydeden modüldür
 // flags : 'a+' : böyle bir dosya yoksa oluştur, dosyayı hem okuma hem yazma modunda aç demek, default da budur yazmasak da olur eğer bunu istiyorsak

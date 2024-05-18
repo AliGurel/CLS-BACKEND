@@ -3,6 +3,7 @@
     EXPRESS - Personnel API
 ------------------------------------------------------- */
 // Ender kullanılacak dosya bu dosya, sync dosyası gibi
+// swagger için json verileri toplayıp hazırlayacak olan dosya
 
 require('dotenv').config()
 const HOST = process.env?.HOST || '127.0.0.1'
@@ -21,7 +22,7 @@ const options = {
 	writeOutputFile:  <boolean>     // Enable/Disable writing the output file.        By default is true
 };
 /* ------------------------------------------------------- */
-//yukarıdakilere hiç ihtiyaç olmayacakmış
+//yukarıdaki ayarlara hiç ihtiyaç olmayacak, biz belirtmeyeceğiz
 // const swaggerAutogen = require('swagger-autogen')({ openapi: '3.0.0', language: 'tr-tr' })
 const swaggerAutogen = require('swagger-autogen')()
 const packageJson = require('./package.json')
@@ -36,7 +37,7 @@ const document = { //sonuçta oluşrurulacak json dosyasının ön tanımlamalar
 	// 	license: { name: "BSD License", },
 	// },
 
-	// yukarıdaki bilglerin nedeyse tamamı zaten bizim package.json dosyamızda var o bedenle package.json dan çekeceğiz bu bilgileri, o ndenle yukarıda package.json u require ettik önce 
+	// yukarıdaki bilglerin nedeyse tamamı zaten bizim package.json dosyamızda var o nedenle package.json dan çekeceğiz bu bilgileri, o ndenle yukarıda package.json u require ettik önce 
 	info: {
 		version: packageJson.version,
 		title: packageJson.title,
@@ -60,8 +61,12 @@ const document = { //sonuçta oluşrurulacak json dosyasının ön tanımlamalar
 	security: [{ Token: [] }], //giriş yöntemi bu olsun
 
 	// dokümantasyondaki MODELLER kısmı ile ilgili alanlardan sorumlu aşağıdakiler
-	// authentication.model diye bir model olmadığı için login ve refresh i manuel yazdı
+	//definitions, swagger sayfasının en altındaki Models bölümünden sorumlu
+	// authentication.model diye bir model olmadığı için login ve refresh i manuel yazdık
 	// hazır tanımlı olan modelleri direkt çağırabiliyoruz
+	//yeni proje yaptığımızda modelleri bu kısımda require edeceğiz
+	//Definition olsa da olur olmasa da olur bir bölümmüş swagger için
+	
 	definitions: {
 		"/auth/login": {
 			username: {
@@ -101,3 +106,4 @@ swaggerAutogen(outputFile, routes, document) //outputFile a, şu sırayla, docum
 // swaggerAutogen ı başlatmak için yeni terminal açtırdı, orda terminale node swaggerAutogen.js yazdırıp çalıştırdı
 // bunu çalıştırınca ana dizinde 91 satırda belirtilen swagger.json isimli bir dosya oluşturuldu
 // swagger a kaynağı artık oluşturduk artık sıra geldi görüntüleme kısmına
+// swagger a bu json u kullan demeliyiz, swaggerUI, index.js de tanımlıyoruz bunu, oradan devam
