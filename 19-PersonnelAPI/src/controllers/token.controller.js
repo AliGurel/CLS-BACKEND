@@ -9,7 +9,7 @@ module.exports = {
 
     list: async (req, res) => {
         // bu bölüm dokümantosyanda gözükmesin diye aşağıdaki gibi yazılır, 
-        // _ tire konursa swagger hiç göstermez
+        // _ tire konursa swagger algılamaz
         // ignore denirse pasif moddda gösterir
         /*
             _swagger.deprecated = true

@@ -13,6 +13,7 @@ module.exports = {
 
     login: async (req, res) => {
         //gruplama yapmak için #swagger.tags kullanıyoruz
+        // bu tags, summary vs onları https://swagger-autogen.github.io/docs/endpoints/ sitesinde bulabilr
         /*
             #swagger.tags = ['Authentication'] 
             #swagger.summary = 'Login' 
@@ -28,6 +29,8 @@ module.exports = {
         */
         // gruplandırma yapmak içn tags kullanılıe
         //in: 'body' bu parametrelerin kullanılcağı yerler
+        //schema objesinin içine örnek parametreler ve değerleri yazılıyor.
+        //Normalde bu parametreleri swagger yakalar dedi ama yakalamzsa maneul bu şekilde yapabiliyormuşuz
 
         const { username, password } = req.body
 
